@@ -211,6 +211,31 @@
                 background: var(--accent-dark);
             }
 
+
+            .hero-actions {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .hero-external-link {
+                border: 1px solid rgba(255, 255, 255, 0.75);
+                background: transparent;
+            }
+
+            .hero-external-link:hover {
+                border-color: var(--white);
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            @media (max-width: 520px) {
+                .hero-actions {
+                    align-items: stretch;
+                    flex-direction: column;
+                }
+            }
+
             /* ═══════════════════════════════════════════
            MAIN CONTENT
            ═══════════════════════════════════════════ */
@@ -868,273 +893,6 @@
                 background: var(--accent-dark);
             }
 
-
-            /* Standard Events demo area */
-            .standard-events-lab {
-                margin: 34px 0;
-                overflow: hidden;
-                border: 1px solid #b9dce8;
-                border-radius: 12px;
-                background: var(--white);
-                box-shadow: 0 10px 30px rgba(11, 31, 58, 0.1);
-            }
-
-            .standard-events-lab-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 24px 28px;
-                color: var(--white);
-                background: linear-gradient(125deg, var(--primary), #164e68);
-                gap: 20px;
-            }
-
-            .standard-events-lab-header h2 {
-                margin-bottom: 6px;
-                font-size: 24px;
-            }
-
-            .standard-events-lab-header p {
-                max-width: 760px;
-                color: #d6edf5;
-                font-size: 14px;
-            }
-
-            .standard-events-badge {
-                flex: 0 0 auto;
-                padding: 7px 12px;
-                border: 1px solid rgba(255, 255, 255, 0.35);
-                border-radius: 999px;
-                background: rgba(255, 255, 255, 0.12);
-                font-size: 12px;
-                font-weight: 700;
-                letter-spacing: 0.06em;
-                text-transform: uppercase;
-            }
-
-            .standard-events-signal-row {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                padding: 18px 28px;
-                border-bottom: 1px solid var(--border);
-                background: #f8fbfd;
-                gap: 14px;
-            }
-
-            .standard-events-signal {
-                display: flex;
-                align-items: center;
-                padding: 12px 14px;
-                border: 1px solid #d8e7ee;
-                border-radius: 8px;
-                background: var(--white);
-                gap: 10px;
-            }
-
-            .standard-events-signal-icon {
-                display: grid;
-                width: 34px;
-                height: 34px;
-                place-items: center;
-                border-radius: 50%;
-                color: #075f74;
-                background: #dff6fb;
-            }
-
-            .standard-events-signal strong {
-                display: block;
-                font-size: 13px;
-            }
-
-            .standard-events-signal code {
-                color: var(--text-light);
-                font-size: 11px;
-            }
-
-            .standard-events-content {
-                display: grid;
-                grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-                padding: 26px 28px 30px;
-                gap: 24px;
-            }
-
-            .standard-events-test-column h3,
-            .standard-events-log-column h3 {
-                margin-bottom: 6px;
-                font-size: 17px;
-            }
-
-            .standard-events-helper {
-                margin-bottom: 16px;
-                color: var(--text-light);
-                font-size: 13px;
-            }
-
-            .standard-events-link-grid {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                margin-bottom: 20px;
-                gap: 12px;
-            }
-
-            .standard-events-test-link,
-            .standard-events-control-card {
-                display: flex;
-                min-height: 82px;
-                align-items: center;
-                padding: 14px;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                color: var(--link);
-                background: #f8fafc;
-                font-size: 13px;
-                font-weight: 700;
-                text-decoration: none;
-                gap: 11px;
-            }
-
-            .standard-events-test-link:hover {
-                border-color: var(--accent);
-                background: #edfafd;
-            }
-
-            .standard-events-control-card {
-                color: var(--text);
-            }
-
-            .standard-events-control-card button {
-                border: 1px solid #aab8c5;
-                border-radius: 5px;
-                padding: 8px 11px;
-                color: var(--text);
-                background: var(--white);
-                cursor: pointer;
-                font-weight: 700;
-            }
-
-            .standard-events-form-grid {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 12px;
-            }
-
-            .standard-events-form {
-                padding: 14px;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                background: #f8fafc;
-            }
-
-            .standard-events-form label {
-                display: block;
-                margin-bottom: 7px;
-                color: var(--text-light);
-                font-size: 12px;
-                font-weight: 700;
-            }
-
-            .standard-events-form input[type='text'] {
-                width: 100%;
-                margin-bottom: 10px;
-                border: 1px solid #b8c6d1;
-                border-radius: 5px;
-                padding: 9px 10px;
-            }
-
-            .standard-events-submit {
-                width: 100%;
-                border: none;
-                border-radius: 5px;
-                padding: 9px 12px;
-                color: var(--white);
-                background: var(--accent-dark);
-                cursor: pointer;
-                font-weight: 700;
-            }
-
-            .standard-events-external-submit {
-                margin-top: 10px;
-            }
-
-            .standard-events-log-column {
-                overflow: hidden;
-                border-radius: 9px;
-                color: #eaf5fa;
-                background: var(--primary);
-            }
-
-            .standard-events-log-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 16px 17px 12px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            }
-
-            .standard-events-log-header p {
-                margin: 0;
-                color: #a9c2d0;
-                font-size: 11px;
-            }
-
-            .standard-events-clear-log {
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 5px;
-                padding: 6px 9px;
-                color: var(--white);
-                background: transparent;
-                cursor: pointer;
-                font-size: 11px;
-            }
-
-            #standard-events-log {
-                min-height: 270px;
-                max-height: 380px;
-                margin: 0;
-                padding: 16px;
-                overflow-y: auto;
-                color: #dcecf3;
-                font-family: Consolas, Monaco, monospace;
-                font-size: 12px;
-                line-height: 1.7;
-                white-space: pre-wrap;
-            }
-
-            .standard-events-network-tip {
-                margin: 0 16px 16px;
-                padding: 11px;
-                border: 1px solid rgba(0, 180, 216, 0.3);
-                border-radius: 6px;
-                color: #bde9f2;
-                background: rgba(0, 180, 216, 0.1);
-                font-size: 11px;
-            }
-
-            @media (max-width: 900px) {
-                .standard-events-content {
-                    grid-template-columns: 1fr;
-                }
-            }
-
-            @media (max-width: 650px) {
-                .standard-events-lab-header {
-                    align-items: flex-start;
-                    flex-direction: column;
-                }
-
-                .standard-events-signal-row,
-                .standard-events-link-grid,
-                .standard-events-form-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .standard-events-content,
-                .standard-events-lab-header,
-                .standard-events-signal-row {
-                    padding-right: 18px;
-                    padding-left: 18px;
-                }
-            }
         </style>
     </head>
     <body>
@@ -1191,7 +949,16 @@
         <section class="hero">
             <h1>Explore the World — Save Up to 40%</h1>
             <p>Flights, hotels, and vacation packages at unbeatable prices</p>
-            <button class="hero-cta" id="explore-deals-btn">Explore All Deals</button>
+            <div class="hero-actions">
+                <button class="hero-cta" id="explore-deals-btn">Explore All Deals</button>
+                <a
+                    class="hero-cta hero-external-link"
+                    id="standard-events-external-link"
+                    href="https://example.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >Open Travel Guide</a>
+            </div>
         </section>
 
         <div class="container">
@@ -1248,7 +1015,7 @@
             <div class="subscribe-section">
                 <h3>📬 Travel Alerts & Exclusive Offers</h3>
                 <p>Be the first to know about fare drops and secret deals</p>
-                <form class="subscribe-form" id="subscribe-form">
+                <form class="subscribe-form" id="standard-events-demo-form">
                     <input type="email" id="subscribe-email" placeholder="Enter your email" required />
                     <button type="submit" id="subscribe-btn">Subscribe</button>
                 </form>
@@ -1333,116 +1100,6 @@
             </div>
         </div>
 
-
-
-        <!-- Standard Events POC test area -->
-        <div class="container">
-            <section class="standard-events-lab" id="standard-events-lab" aria-labelledby="standard-events-heading">
-                <div class="standard-events-lab-header">
-                    <div>
-                        <h2 id="standard-events-heading">Standard Events Demo Lab</h2>
-                        <p>
-                            Use these controls to demonstrate page-view, link-click, and form-submission signals.
-                            The managed rules collect event names only.
-                        </p>
-                    </div>
-                    <span class="standard-events-badge">Beta POC</span>
-                </div>
-
-                <div class="standard-events-signal-row" aria-label="Signals under test">
-                    <div class="standard-events-signal">
-                        <span class="standard-events-signal-icon" aria-hidden="true">◫</span>
-                        <span><strong>Page view</strong><code>page_view</code></span>
-                    </div>
-                    <div class="standard-events-signal">
-                        <span class="standard-events-signal-icon" aria-hidden="true">↗</span>
-                        <span><strong>Link click</strong><code>click</code></span>
-                    </div>
-                    <div class="standard-events-signal">
-                        <span class="standard-events-signal-icon" aria-hidden="true">✓</span>
-                        <span><strong>Form submission</strong><code>form_submitted</code></span>
-                    </div>
-                </div>
-
-                <div class="standard-events-content">
-                    <div class="standard-events-test-column">
-                        <h3>Link tests</h3>
-                        <p class="standard-events-helper">
-                            The first three controls match <code>a[href]</code>. The ordinary button is a negative control.
-                        </p>
-                        <div class="standard-events-link-grid">
-                            <a id="standard-events-internal-link" class="standard-events-test-link" href="#standard-events-form-tests">
-                                <span aria-hidden="true">🧭</span>
-                                <span>Open the form test area</span>
-                            </a>
-                            <a
-                                id="standard-events-external-link"
-                                class="standard-events-test-link"
-                                href="https://example.com/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span aria-hidden="true">🌐</span>
-                                <span>Open an external example</span>
-                            </a>
-                            <a id="standard-events-nested-link" class="standard-events-test-link" href="#standard-events-log-panel">
-                                <span aria-hidden="true">◆</span>
-                                <span><strong>Click this nested text</strong><br>Open the diagnostic log</span>
-                            </a>
-                            <div class="standard-events-control-card">
-                                <span aria-hidden="true">⊘</span>
-                                <button id="standard-events-control-button" type="button">Run negative control</button>
-                            </div>
-                        </div>
-
-                        <h3 id="standard-events-form-tests">Form tests</h3>
-                        <p class="standard-events-helper">
-                            The controls cover a submit button, submit input, and a button outside its form.
-                        </p>
-                        <div class="standard-events-form-grid">
-                            <form id="standard-events-button-form" class="standard-events-form">
-                                <label for="standard-events-button-value">Button form</label>
-                                <input id="standard-events-button-value" type="text" placeholder="No value is collected" autocomplete="off">
-                                <button class="standard-events-submit" type="submit">Submit with button</button>
-                            </form>
-
-                            <form id="standard-events-input-form" class="standard-events-form">
-                                <label for="standard-events-input-value">Input form</label>
-                                <input id="standard-events-input-value" type="text" placeholder="No value is collected" autocomplete="off">
-                                <input class="standard-events-submit" type="submit" value="Submit with input">
-                            </form>
-
-                            <form id="standard-events-external-form" class="standard-events-form">
-                                <label for="standard-events-external-value">External control form</label>
-                                <input id="standard-events-external-value" type="text" placeholder="No value is collected" autocomplete="off">
-                            </form>
-                            <div class="standard-events-form">
-                                <label>Button linked through the form attribute</label>
-                                <button
-                                    class="standard-events-submit standard-events-external-submit"
-                                    type="submit"
-                                    form="standard-events-external-form"
-                                >Submit external form</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <aside class="standard-events-log-column" id="standard-events-log-panel" aria-labelledby="standard-events-log-heading">
-                        <div class="standard-events-log-header">
-                            <div>
-                                <h3 id="standard-events-log-heading">Interaction log</h3>
-                                <p>Local diagnostics only</p>
-                            </div>
-                            <button id="standard-events-clear-log" class="standard-events-clear-log" type="button">Clear</button>
-                        </div>
-                        <div id="standard-events-log" role="log" aria-live="polite"></div>
-                        <p class="standard-events-network-tip">
-                            Open Chrome DevTools. Filter the Network panel for <code>iu3</code> to verify AAT requests.
-                        </p>
-                    </aside>
-                </div>
-            </section>
-        </div>
 
         <!-- ═══════════════════════════════════════════
          FOOTER
@@ -1740,7 +1397,7 @@
             });
 
             // ─── SUBSCRIBE ───
-            document.getElementById('subscribe-form').addEventListener('submit', (e) => {
+            document.getElementById('standard-events-demo-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const email = document.getElementById('subscribe-email').value;
                 showNotification(`📬 Subscribed to travel alerts: ${email}`);
@@ -1811,47 +1468,6 @@
             }
         </script>
 
-
-        <!-- Standard Events demo diagnostics -->
-        <script>
-            (function () {
-                var log = document.getElementById('standard-events-log');
-                var lab = document.getElementById('standard-events-lab');
-
-                function addStandardEventsLog(message) {
-                    var time = new Date().toLocaleTimeString();
-                    log.textContent += '[' + time + '] ' + message + '\n';
-                    log.scrollTop = log.scrollHeight;
-                }
-
-                window.addEventListener('load', function () {
-                    addStandardEventsLog('Page load completed');
-                });
-
-                lab.addEventListener('click', function (event) {
-                    var link = event.target.closest('a[href]');
-                    if (link) {
-                        addStandardEventsLog('Link click observed: ' + link.id);
-                    }
-                });
-
-                lab.querySelectorAll('form').forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        addStandardEventsLog('Form submission observed: ' + form.id);
-                    });
-                });
-
-                document.getElementById('standard-events-control-button').addEventListener('click', function () {
-                    addStandardEventsLog('Negative control observed. No link event expected.');
-                });
-
-                document.getElementById('standard-events-clear-log').addEventListener('click', function () {
-                    log.textContent = '';
-                    addStandardEventsLog('Interaction log cleared');
-                });
-            })();
-        </script>
 
         <!--
         ## Sources

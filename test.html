@@ -1056,22 +1056,29 @@
             <!-- ═══════════════════════════════════════════
              SIGN UP
              ═══════════════════════════════════════════ -->
-            <div class="signup-section" id="signup-section">
+            <form class="signup-section" id="signup-section">
                 <h3>Join TravelHub</h3>
                 <p class="subtitle">Unlock member-only prices and rewards</p>
                 <div class="form-group">
-                    <input type="text" id="signup-name" placeholder="Full name" />
+                    <input type="text" id="signup-name" name="name" placeholder="Full name" autocomplete="name" required />
                 </div>
                 <div class="form-group">
-                    <input type="email" id="signup-email" placeholder="Email address" />
+                    <input type="email" id="signup-email" name="email" placeholder="Email address" autocomplete="email" required />
                 </div>
                 <div class="form-group">
-                    <input type="password" id="signup-password" placeholder="Create password" />
+                    <input
+                        type="password"
+                        id="signup-password"
+                        name="password"
+                        placeholder="Create password"
+                        autocomplete="new-password"
+                        required
+                    />
                 </div>
-                <button class="btn-signup" id="signup-btn">Create your TravelHub account</button>
+                <button type="submit" class="btn-signup" id="signup-btn">Create your TravelHub account</button>
                 <div class="signup-divider">— Already a member? —</div>
-                <button class="btn-signin" id="signin-btn">Sign in</button>
-            </div>
+                <button type="button" class="btn-signin" id="signin-btn">Sign in</button>
+            </form>
 
             <!-- ═══════════════════════════════════════════
              CONTACT / SUPPORT FORM
@@ -1405,14 +1412,10 @@
             });
 
             // ─── SIGN UP ───
-            document.getElementById('signup-btn').addEventListener('click', () => {
+            document.getElementById('signup-section').addEventListener('submit', (e) => {
+                e.preventDefault();
                 const name = document.getElementById('signup-name').value;
-                const email = document.getElementById('signup-email').value;
-                if (name && email) {
-                    showNotification(`✍️ TravelHub account created for: ${name}`);
-                } else {
-                    showNotification('⚠️ Please fill in all fields');
-                }
+                showNotification(`✍️ TravelHub account created for: ${name}`);
             });
 
             document.getElementById('signin-btn').addEventListener('click', () => {

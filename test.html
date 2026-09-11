@@ -3,46 +3,757 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AAT Standard Events POC</title>
+  <meta name="description" content="A polished test page for Amazon Ad Tag Standard Events.">
+  <title>Signal Lab | Standard Events Demo</title>
   <style>
     :root {
       color-scheme: light;
-      font-family: Arial, sans-serif;
+      --ink: #0f1b2d;
+      --muted: #5f6b7a;
+      --surface: #ffffff;
+      --surface-soft: #f3f6fa;
+      --line: #d9e2ec;
+      --navy: #101d36;
+      --navy-soft: #1a2c4f;
+      --orange: #ff9d3f;
+      --orange-dark: #c75b12;
+      --blue: #3ca7ff;
+      --green: #168563;
+      --shadow: 0 18px 55px rgba(15, 27, 45, 0.12);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      max-width: 760px;
-      margin: 40px auto;
-      padding: 0 20px;
-      line-height: 1.5;
-      color: #16191f;
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(60, 167, 255, 0.14), transparent 25rem),
+        linear-gradient(180deg, #f8fbff 0, #eef3f8 100%);
+      line-height: 1.55;
     }
 
-    section {
-      margin: 24px 0;
-      padding: 20px;
-      border: 1px solid #aab7b8;
-      border-radius: 8px;
-    }
-
-    .control {
-      margin: 12px 0;
+    a {
+      color: inherit;
     }
 
     button,
     input {
-      padding: 8px;
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(16, 29, 54, 0.95);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1160px, calc(100% - 40px));
+      min-height: 68px;
+      margin: 0 auto;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 11px;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--orange), #ffd27f);
+      box-shadow: 0 6px 22px rgba(255, 157, 63, 0.34);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: #dbe8f5;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #ffffff;
+    }
+
+    .environment-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .environment-pill::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #53dda7;
+      content: "";
+      box-shadow: 0 0 0 4px rgba(83, 221, 167, 0.15);
+    }
+
+    .hero {
+      overflow: hidden;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(60, 167, 255, 0.35), transparent 24rem),
+        radial-gradient(circle at 20% 100%, rgba(255, 157, 63, 0.2), transparent 22rem),
+        linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    }
+
+    .hero-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+      align-items: center;
+      width: min(1160px, calc(100% - 40px));
+      min-height: 430px;
+      margin: 0 auto;
+      padding: 72px 0;
+      gap: 64px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 18px;
+      color: #badcff;
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 22px;
+      height: 2px;
+      background: var(--orange);
+      content: "";
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 20px;
+      font-size: clamp(2.45rem, 5vw, 4.55rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-bottom: 30px;
+      color: #c8d8e9;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 19px;
+      border: 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 730;
+      text-decoration: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 3px solid rgba(60, 167, 255, 0.45);
+      outline-offset: 3px;
+    }
+
+    .button-primary {
+      color: #1d2734;
+      background: linear-gradient(135deg, var(--orange), #ffc66d);
+      box-shadow: 0 12px 28px rgba(255, 157, 63, 0.25);
+    }
+
+    .button-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .signal-panel {
+      position: relative;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.17);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(15px);
+    }
+
+    .signal-panel::after {
+      position: absolute;
+      right: -35px;
+      bottom: -40px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 157, 63, 0.22);
+      content: "";
+      filter: blur(12px);
+    }
+
+    .panel-kicker {
+      margin-bottom: 18px;
+      color: #96a9bd;
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .signal-list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .signal-item {
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 13px;
+      background: rgba(10, 20, 39, 0.5);
+      gap: 11px;
+    }
+
+    .signal-icon {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(60, 167, 255, 0.14);
+      font-size: 1.05rem;
+    }
+
+    .signal-name {
+      margin: 0;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .signal-code {
+      color: #94a9bf;
+      font-size: 0.74rem;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #53dda7;
+      box-shadow: 0 0 0 5px rgba(83, 221, 167, 0.12);
+    }
+
+    main {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 68px 0 80px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 30px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 7px;
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      max-width: 640px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .step-label {
+      flex: 0 0 auto;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: #135d8c;
+      background: #e5f4ff;
+      font-size: 0.78rem;
+      font-weight: 750;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 64px;
+      gap: 20px;
+    }
+
+    .demo-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 248px;
+      padding: 25px;
+      border: 1px solid rgba(217, 226, 236, 0.9);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      box-shadow: 0 12px 35px rgba(22, 43, 71, 0.08);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .demo-card::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--orange));
+      content: "";
+    }
+
+    .card-number {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 20px;
+      place-items: center;
+      border-radius: 12px;
+      color: #15608f;
+      background: #e7f5ff;
+      font-weight: 800;
+    }
+
+    .demo-card h3 {
+      margin-bottom: 9px;
+      font-size: 1.16rem;
+    }
+
+    .demo-card p {
+      min-height: 50px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .test-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #116aa6;
+      font-weight: 730;
+      text-decoration: none;
+    }
+
+    .test-link::after {
+      content: "→";
+      transition: transform 150ms ease;
+    }
+
+    .test-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    .nested-link-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-card {
+      border-style: dashed;
+      background: linear-gradient(145deg, #fbfcfe, #f4f7fb);
+    }
+
+    .control-button {
+      color: #33485f;
+      background: #e6edf4;
+    }
+
+    .target-banner {
+      display: flex;
+      align-items: center;
+      margin: -36px 0 64px;
+      padding: 16px 19px;
+      border: 1px solid #b8e4d5;
+      border-radius: var(--radius-sm);
+      color: #11513f;
+      background: #eaf9f3;
+      gap: 12px;
+    }
+
+    .target-banner strong {
+      display: block;
+    }
+
+    .target-icon {
+      font-size: 1.35rem;
+    }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      align-items: start;
+      gap: 24px;
+    }
+
+    .form-panel,
+    .log-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: 0 13px 40px rgba(22, 43, 71, 0.08);
+    }
+
+    .panel-header {
+      padding: 25px 27px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-header h2 {
+      margin-bottom: 6px;
+      font-size: 1.45rem;
+      letter-spacing: -0.025em;
+    }
+
+    .panel-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .form-stack {
+      display: grid;
+      padding: 26px;
+      gap: 22px;
+    }
+
+    .test-form {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
+    }
+
+    .test-form h3 {
+      margin-bottom: 5px;
+      font-size: 1rem;
+    }
+
+    .test-form p {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 10px;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 7px;
+    }
+
+    label {
+      color: #33485f;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 13px;
+      border: 1px solid #aab9c8;
+      border-radius: 9px;
+      color: var(--ink);
+      background: #ffffff;
+    }
+
+    .form-submit {
+      min-height: 44px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 9px;
+      color: #ffffff;
+      background: var(--orange-dark);
+      cursor: pointer;
+      font-weight: 730;
+    }
+
+    input.form-submit {
+      padding: 0 16px;
+    }
+
+    .external-submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 20px;
+      gap: 16px;
+    }
+
+    .external-submit-row span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .log-panel {
+      position: sticky;
+      top: 92px;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .log-panel .panel-header {
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .log-panel .panel-header p {
+      color: #9eb1c6;
+    }
+
+    .log-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #9eb1c6;
+      font-size: 0.76rem;
+    }
+
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .live-status::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #53dda7;
+      content: "";
+    }
+
+    .clear-log {
+      padding: 5px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 7px;
+      color: #dbe8f5;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.75rem;
     }
 
     #event-log {
-      min-height: 100px;
-      padding: 12px;
-      background: #f2f3f3;
+      min-height: 310px;
+      max-height: 460px;
+      margin: 0;
+      padding: 17px;
+      overflow-y: auto;
+      color: #dbe8f5;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.78rem;
       white-space: pre-wrap;
+    }
+
+    .network-tip {
+      margin: 17px;
+      padding: 14px;
+      border: 1px solid rgba(60, 167, 255, 0.22);
+      border-radius: 10px;
+      color: #b8d8f1;
+      background: rgba(60, 167, 255, 0.08);
+      font-size: 0.82rem;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: #ffd59d;
+      background: rgba(255, 255, 255, 0.08);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.84rem;
+      text-align: center;
+    }
+
+    @media (max-width: 880px) {
+      .hero-shell,
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-shell {
+        gap: 38px;
+      }
+
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-card {
+        min-height: auto;
+      }
+
+      .demo-card p {
+        min-height: auto;
+      }
+
+      .log-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .nav-shell,
+      .hero-shell,
+      main {
+        width: min(100% - 28px, 1160px);
+      }
+
+      .nav-links a {
+        display: none;
+      }
+
+      .hero-shell {
+        min-height: auto;
+        padding: 54px 0;
+      }
+
+      h1 {
+        font-size: 2.65rem;
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-submit,
+      input.form-submit {
+        width: 100%;
+      }
+
+      .external-submit-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
     }
   </style>
 
-  <!-- Add this script before the </head> on the page where website actions can occur. This script captures events when the page loads. -->
+  <!-- This test page uses the Beta Amazon Ad Tag bundle. -->
   <script>
     !function(w,d,s,t,a){if(w.amzn)return;w.amzn=a=function(){w.amzn.q.push([arguments,(new Date).getTime()])};a.q=[];a.version="0.0";s=d.createElement("script");s.src="https://dgly4i8n5pn3f.cloudfront.net/aat/amzn.js";s.id="amzn-pixel";s.async=true;t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t)}(window,document);
     amzn("setRegion", "NA");
@@ -50,70 +761,193 @@
   </script>
 </head>
 <body>
-  <h1>AAT Standard Events POC</h1>
-  <p>Use the browser Network panel. Filter requests with <code>iu3</code>.</p>
-
-  <section aria-labelledby="link-tests-heading">
-    <h2 id="link-tests-heading">Link click tests</h2>
-
-    <p class="control">
-      <a id="internal-link" href="#internal-target">Open the internal target</a>
-    </p>
-
-    <p class="control">
-      <a
-        id="external-link"
-        href="https://example.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >Open an external test page</a>
-    </p>
-
-    <p class="control">
-      <a id="nested-link" href="#nested-target">
-        <span>Click a nested element inside a link</span>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Main navigation">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>Signal Lab</span>
       </a>
-    </p>
+      <div class="nav-links">
+        <a href="#link-tests">Link tests</a>
+        <a href="#form-tests">Form tests</a>
+        <span class="environment-pill">Beta live</span>
+      </div>
+    </nav>
+  </header>
 
-    <p class="control">
-      <button id="ordinary-button" type="button">
-        Click an ordinary button
-      </button>
-    </p>
-
-    <div id="internal-target">Internal link target</div>
-    <div id="nested-target">Nested link target</div>
-  </section>
-
-  <section aria-labelledby="form-tests-heading">
-    <h2 id="form-tests-heading">Form submission tests</h2>
-
-    <form id="standard-form">
-      <div class="control">
-        <label for="standard-input">Test value</label>
-        <input id="standard-input" name="test-value" type="text" autocomplete="off">
+  <div id="top" class="hero">
+    <div class="hero-shell">
+      <div>
+        <p class="eyebrow">Standard Events demonstration</p>
+        <h1>Test each signal on one polished page.</h1>
+        <p class="hero-copy">
+          This controlled fixture demonstrates page views, link clicks, and form submission events.
+          It collects no event attributes or form values.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#link-tests">Start the demo</a>
+          <a class="button button-secondary" href="#diagnostic-heading">Open the event log</a>
+        </div>
       </div>
 
-      <button type="submit">Submit with a button</button>
-      <input type="submit" value="Submit with an input">
-    </form>
+      <aside class="signal-panel" aria-label="Enabled event signals">
+        <p class="panel-kicker">Signals under test</p>
+        <ul class="signal-list">
+          <li class="signal-item">
+            <span class="signal-icon" aria-hidden="true">◫</span>
+            <span>
+              <span class="signal-name">Page view</span><br>
+              <span class="signal-code">page_view</span>
+            </span>
+            <span class="status-dot" title="Active"></span>
+          </li>
+          <li class="signal-item">
+            <span class="signal-icon" aria-hidden="true">↗</span>
+            <span>
+              <span class="signal-name">Link click</span><br>
+              <span class="signal-code">click</span>
+            </span>
+            <span class="status-dot" title="Active"></span>
+          </li>
+          <li class="signal-item">
+            <span class="signal-icon" aria-hidden="true">✓</span>
+            <span>
+              <span class="signal-name">Form submission</span><br>
+              <span class="signal-code">form_submitted</span>
+            </span>
+            <span class="status-dot" title="Active"></span>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </div>
 
-    <form id="external-button-form">
-      <div class="control">
-        <label for="external-input">Another test value</label>
-        <input id="external-input" name="another-test-value" type="text" autocomplete="off">
+  <main>
+    <section id="link-tests" aria-labelledby="link-tests-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="link-tests-heading">Link click test gallery</h2>
+          <p>Each link exercises the current <code>a[href]</code> rule. The control button must not send a link event.</p>
+        </div>
+        <span class="step-label">Test 1 of 2</span>
       </div>
-    </form>
 
-    <button type="submit" form="external-button-form">
-      Submit with an external button
-    </button>
-  </section>
+      <div class="demo-grid">
+        <article class="demo-card">
+          <span class="card-number">01</span>
+          <h3>Internal destination</h3>
+          <p>Test an anchor that moves to another area on this page.</p>
+          <a id="internal-link" class="test-link" href="#internal-target">Open the internal target</a>
+        </article>
 
-  <section aria-labelledby="diagnostic-heading">
-    <h2 id="diagnostic-heading">Local diagnostic log</h2>
-    <div id="event-log" role="log" aria-live="polite"></div>
-  </section>
+        <article class="demo-card">
+          <span class="card-number">02</span>
+          <h3>External destination</h3>
+          <p>Test a link that opens a safe external example in another tab.</p>
+          <a
+            id="external-link"
+            class="test-link"
+            href="https://example.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open the external page</a>
+        </article>
+
+        <article class="demo-card">
+          <span class="card-number">03</span>
+          <h3>Nested click target</h3>
+          <p>Test a child element inside an anchor. The parent link remains the match.</p>
+          <a id="nested-link" class="test-link" href="#nested-target">
+            <span class="nested-link-content"><span aria-hidden="true">◆</span> Click the nested content</span>
+          </a>
+        </article>
+
+        <article class="demo-card control-card">
+          <span class="card-number">04</span>
+          <h3>Negative control</h3>
+          <p>This ordinary button must update only the local diagnostic log.</p>
+          <button id="ordinary-button" class="button control-button" type="button">Run the control check</button>
+        </article>
+      </div>
+
+      <div id="internal-target" class="target-banner">
+        <span class="target-icon" aria-hidden="true">✓</span>
+        <span><strong>Internal target reached</strong>The browser followed the first test link.</span>
+      </div>
+      <div id="nested-target" class="target-banner">
+        <span class="target-icon" aria-hidden="true">✓</span>
+        <span><strong>Nested target reached</strong>The browser resolved the link from its child element.</span>
+      </div>
+    </section>
+
+    <div class="workspace-grid">
+      <section id="form-tests" class="form-panel" aria-labelledby="form-tests-heading">
+        <div class="panel-header">
+          <h2 id="form-tests-heading">Form submission test suite</h2>
+          <p>These controls exercise each selector in the managed form rule.</p>
+        </div>
+
+        <div class="form-stack">
+          <form id="standard-form" class="test-form">
+            <h3>Native button submission</h3>
+            <p>The page prevents navigation after the browser raises the submit event.</p>
+            <div class="field-row">
+              <div class="field-group">
+                <label for="standard-input">Optional test label</label>
+                <input id="standard-input" name="test-value" type="text" placeholder="No value is collected" autocomplete="off">
+              </div>
+              <button class="form-submit" type="submit">Submit with button</button>
+            </div>
+          </form>
+
+          <form id="input-submit-form" class="test-form">
+            <h3>Input control submission</h3>
+            <p>This form uses an input element instead of a button.</p>
+            <div class="field-row">
+              <div class="field-group">
+                <label for="input-submit-value">Optional test label</label>
+                <input id="input-submit-value" name="input-submit-value" type="text" placeholder="No value is collected" autocomplete="off">
+              </div>
+              <input class="form-submit" type="submit" value="Submit with input">
+            </div>
+          </form>
+
+          <form id="external-button-form" class="test-form">
+            <h3>External button submission</h3>
+            <p>The submit control appears outside this form and connects through its form attribute.</p>
+            <div class="field-group">
+              <label for="external-input">Optional test label</label>
+              <input id="external-input" name="another-test-value" type="text" placeholder="No value is collected" autocomplete="off">
+            </div>
+          </form>
+        </div>
+
+        <div class="external-submit-row">
+          <span>The following button belongs to the form above.</span>
+          <button class="form-submit" type="submit" form="external-button-form">Submit external form</button>
+        </div>
+      </section>
+
+      <section class="log-panel" aria-labelledby="diagnostic-heading">
+        <div class="panel-header">
+          <h2 id="diagnostic-heading">Diagnostic event log</h2>
+          <p>This local log confirms each page interaction.</p>
+        </div>
+        <div class="log-toolbar">
+          <span class="live-status">Listening</span>
+          <button id="clear-log" class="clear-log" type="button">Clear log</button>
+        </div>
+        <div id="event-log" role="log" aria-live="polite"></div>
+        <p class="network-tip">
+          Open Chrome DevTools. Select Network, then filter for <code>iu3</code> to verify the AAT requests.
+        </p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      Signal Lab is a controlled Standard Events POC fixture. It does not collect page content or submitted values.
+    </footer>
+  </main>
 
   <script>
     const eventLog = document.getElementById("event-log");
@@ -121,6 +955,7 @@
     function addLog(message) {
       const time = new Date().toLocaleTimeString();
       eventLog.textContent += `[${time}] ${message}\n`;
+      eventLog.scrollTop = eventLog.scrollHeight;
     }
 
     window.addEventListener("load", () => {
@@ -131,7 +966,7 @@
       const link = event.target.closest("a[href]");
 
       if (link) {
-        addLog(`Link click observed: ${link.id}`);
+        addLog(`Link click observed: ${link.id || "navigation-link"}`);
       }
     });
 
@@ -143,7 +978,12 @@
     });
 
     document.getElementById("ordinary-button").addEventListener("click", () => {
-      addLog("Ordinary button click observed");
+      addLog("Ordinary button control observed");
+    });
+
+    document.getElementById("clear-log").addEventListener("click", () => {
+      eventLog.textContent = "";
+      addLog("Diagnostic log cleared");
     });
   </script>
 </body>

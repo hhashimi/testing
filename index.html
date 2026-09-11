@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AAT Standard Events POC</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.5;
+      color: #16191f;
+    }
+
+    section {
+      margin: 24px 0;
+      padding: 20px;
+      border: 1px solid #aab7b8;
+      border-radius: 8px;
+    }
+
+    .control {
+      margin: 12px 0;
+    }
+
+    button,
+    input {
+      padding: 8px;
+    }
+
+    #event-log {
+      min-height: 100px;
+      padding: 12px;
+      background: #f2f3f3;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>AAT Standard Events POC</h1>
+  <p>Use the browser Network panel. Filter requests with <code>iu3</code>.</p>
+
+  <section aria-labelledby="link-tests-heading">
+    <h2 id="link-tests-heading">Link click tests</h2>
+
+    <p class="control">
+      <a id="internal-link" href="#internal-target">Open the internal target</a>
+    </p>
+
+    <p class="control">
+      <a
+        id="external-link"
+        href="https://example.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Open an external test page</a>
+    </p>
+
+    <p class="control">
+      <a id="nested-link" href="#nested-target">
+        <span>Click a nested element inside a link</span>
+      </a>
+    </p>
+
+    <p class="control">
+      <button id="ordinary-button" type="button">
+        Click an ordinary button
+      </button>
+    </p>
+
+    <div id="internal-target">Internal link target</div>
+    <div id="nested-target">Nested link target</div>
+  </section>
+
+  <section aria-labelledby="form-tests-heading">
+    <h2 id="form-tests-heading">Form submission tests</h2>
+
+    <form id="standard-form">
+      <div class="control">
+        <label for="standard-input">Test value</label>
+        <input id="standard-input" name="test-value" type="text" autocomplete="off">
+      </div>
+
+      <button type="submit">Submit with a button</button>
+      <input type="submit" value="Submit with an input">
+    </form>
+
+    <form id="external-button-form">
+      <div class="control">
+        <label for="external-input">Another test value</label>
+        <input id="external-input" name="another-test-value" type="text" autocomplete="off">
+      </div>
+    </form>
+
+    <button type="submit" form="external-button-form">
+      Submit with an external button
+    </button>
+  </section>
+
+  <section aria-labelledby="diagnostic-heading">
+    <h2 id="diagnostic-heading">Local diagnostic log</h2>
+    <div id="event-log" role="log" aria-live="polite"></div>
+  </section>
+
+  <!-- Add only an approved public test tag. Do not add internal data. -->
+
+  <script>
+    const eventLog = document.getElementById("event-log");
+
+    function addLog(message) {
+      const time = new Date().toLocaleTimeString();
+      eventLog.textContent += `[${time}] ${message}\n`;
+    }
+
+    window.addEventListener("load", () => {
+      addLog("Page load completed");
+    });
+
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest("a[href]");
+
+      if (link) {
+        addLog(`Link click observed: ${link.id}`);
+      }
+    });
+
+    document.querySelectorAll("form").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        addLog(`Form submit event observed: ${form.id}`);
+      });
+    });
+
+    document.getElementById("ordinary-button").addEventListener("click", () => {
+      addLog("Ordinary button click observed");
+    });
+  </script>
+</body>
+</html>

@@ -1,990 +1,1862 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A polished test page for Amazon Ad Tag Standard Events.">
-  <title>Signal Lab | Standard Events Demo</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --ink: #0f1b2d;
-      --muted: #5f6b7a;
-      --surface: #ffffff;
-      --surface-soft: #f3f6fa;
-      --line: #d9e2ec;
-      --navy: #101d36;
-      --navy-soft: #1a2c4f;
-      --orange: #ff9d3f;
-      --orange-dark: #c75b12;
-      --blue: #3ca7ff;
-      --green: #168563;
-      --shadow: 0 18px 55px rgba(15, 27, 45, 0.12);
-      --radius-lg: 24px;
-      --radius-md: 16px;
-      --radius-sm: 10px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-width: 320px;
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 8% 5%, rgba(60, 167, 255, 0.14), transparent 25rem),
-        linear-gradient(180deg, #f8fbff 0, #eef3f8 100%);
-      line-height: 1.55;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(16, 29, 54, 0.95);
-      backdrop-filter: blur(14px);
-    }
-
-    .nav-shell {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: min(1160px, calc(100% - 40px));
-      min-height: 68px;
-      margin: 0 auto;
-      gap: 24px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 750;
-      letter-spacing: -0.02em;
-    }
-
-    .brand-mark {
-      display: grid;
-      width: 38px;
-      height: 38px;
-      place-items: center;
-      border-radius: 11px;
-      color: var(--navy);
-      background: linear-gradient(135deg, var(--orange), #ffd27f);
-      box-shadow: 0 6px 22px rgba(255, 157, 63, 0.34);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      color: #dbe8f5;
-      font-size: 0.92rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-    }
-
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
-      color: #ffffff;
-    }
-
-    .environment-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 11px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 999px;
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.08);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .environment-pill::before {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #53dda7;
-      content: "";
-      box-shadow: 0 0 0 4px rgba(83, 221, 167, 0.15);
-    }
-
-    .hero {
-      overflow: hidden;
-      color: #ffffff;
-      background:
-        radial-gradient(circle at 78% 18%, rgba(60, 167, 255, 0.35), transparent 24rem),
-        radial-gradient(circle at 20% 100%, rgba(255, 157, 63, 0.2), transparent 22rem),
-        linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
-    }
-
-    .hero-shell {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
-      align-items: center;
-      width: min(1160px, calc(100% - 40px));
-      min-height: 430px;
-      margin: 0 auto;
-      padding: 72px 0;
-      gap: 64px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0 0 18px;
-      color: #badcff;
-      font-size: 0.78rem;
-      font-weight: 750;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      width: 22px;
-      height: 2px;
-      background: var(--orange);
-      content: "";
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      max-width: 720px;
-      margin-bottom: 20px;
-      font-size: clamp(2.45rem, 5vw, 4.55rem);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-    }
-
-    .hero-copy {
-      max-width: 650px;
-      margin-bottom: 30px;
-      color: #c8d8e9;
-      font-size: clamp(1rem, 2vw, 1.18rem);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .button {
-      display: inline-flex;
-      min-height: 46px;
-      align-items: center;
-      justify-content: center;
-      padding: 0 19px;
-      border: 0;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-weight: 730;
-      text-decoration: none;
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button:focus-visible,
-    input:focus-visible,
-    a:focus-visible {
-      outline: 3px solid rgba(60, 167, 255, 0.45);
-      outline-offset: 3px;
-    }
-
-    .button-primary {
-      color: #1d2734;
-      background: linear-gradient(135deg, var(--orange), #ffc66d);
-      box-shadow: 0 12px 28px rgba(255, 157, 63, 0.25);
-    }
-
-    .button-secondary {
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .signal-panel {
-      position: relative;
-      padding: 25px;
-      border: 1px solid rgba(255, 255, 255, 0.17);
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
-      backdrop-filter: blur(15px);
-    }
-
-    .signal-panel::after {
-      position: absolute;
-      right: -35px;
-      bottom: -40px;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(255, 157, 63, 0.22);
-      content: "";
-      filter: blur(12px);
-    }
-
-    .panel-kicker {
-      margin-bottom: 18px;
-      color: #96a9bd;
-      font-size: 0.75rem;
-      font-weight: 750;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .signal-list {
-      display: grid;
-      margin: 0;
-      padding: 0;
-      gap: 12px;
-      list-style: none;
-    }
-
-    .signal-item {
-      display: grid;
-      grid-template-columns: 38px 1fr auto;
-      align-items: center;
-      padding: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 13px;
-      background: rgba(10, 20, 39, 0.5);
-      gap: 11px;
-    }
-
-    .signal-icon {
-      display: grid;
-      width: 38px;
-      height: 38px;
-      place-items: center;
-      border-radius: 10px;
-      background: rgba(60, 167, 255, 0.14);
-      font-size: 1.05rem;
-    }
-
-    .signal-name {
-      margin: 0;
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .signal-code {
-      color: #94a9bf;
-      font-size: 0.74rem;
-    }
-
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #53dda7;
-      box-shadow: 0 0 0 5px rgba(83, 221, 167, 0.12);
-    }
-
-    main {
-      width: min(1160px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 68px 0 80px;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      margin-bottom: 24px;
-      gap: 30px;
-    }
-
-    .section-heading h2 {
-      margin-bottom: 7px;
-      font-size: clamp(1.75rem, 3vw, 2.35rem);
-      line-height: 1.12;
-      letter-spacing: -0.035em;
-    }
-
-    .section-heading p {
-      max-width: 640px;
-      margin-bottom: 0;
-      color: var(--muted);
-    }
-
-    .step-label {
-      flex: 0 0 auto;
-      padding: 7px 11px;
-      border-radius: 999px;
-      color: #135d8c;
-      background: #e5f4ff;
-      font-size: 0.78rem;
-      font-weight: 750;
-    }
-
-    .demo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-bottom: 64px;
-      gap: 20px;
-    }
-
-    .demo-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 248px;
-      padding: 25px;
-      border: 1px solid rgba(217, 226, 236, 0.9);
-      border-radius: var(--radius-md);
-      background: var(--surface);
-      box-shadow: 0 12px 35px rgba(22, 43, 71, 0.08);
-      transition: transform 180ms ease, box-shadow 180ms ease;
-    }
-
-    .demo-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-
-    .demo-card::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--blue), var(--orange));
-      content: "";
-    }
-
-    .card-number {
-      display: grid;
-      width: 42px;
-      height: 42px;
-      margin-bottom: 20px;
-      place-items: center;
-      border-radius: 12px;
-      color: #15608f;
-      background: #e7f5ff;
-      font-weight: 800;
-    }
-
-    .demo-card h3 {
-      margin-bottom: 9px;
-      font-size: 1.16rem;
-    }
-
-    .demo-card p {
-      min-height: 50px;
-      margin-bottom: 20px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .test-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #116aa6;
-      font-weight: 730;
-      text-decoration: none;
-    }
-
-    .test-link::after {
-      content: "→";
-      transition: transform 150ms ease;
-    }
-
-    .test-link:hover::after {
-      transform: translateX(4px);
-    }
-
-    .nested-link-content {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .control-card {
-      border-style: dashed;
-      background: linear-gradient(145deg, #fbfcfe, #f4f7fb);
-    }
-
-    .control-button {
-      color: #33485f;
-      background: #e6edf4;
-    }
-
-    .target-banner {
-      display: flex;
-      align-items: center;
-      margin: -36px 0 64px;
-      padding: 16px 19px;
-      border: 1px solid #b8e4d5;
-      border-radius: var(--radius-sm);
-      color: #11513f;
-      background: #eaf9f3;
-      gap: 12px;
-    }
-
-    .target-banner strong {
-      display: block;
-    }
-
-    .target-icon {
-      font-size: 1.35rem;
-    }
-
-    .workspace-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
-      align-items: start;
-      gap: 24px;
-    }
-
-    .form-panel,
-    .log-panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--surface);
-      box-shadow: 0 13px 40px rgba(22, 43, 71, 0.08);
-    }
-
-    .panel-header {
-      padding: 25px 27px 18px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .panel-header h2 {
-      margin-bottom: 6px;
-      font-size: 1.45rem;
-      letter-spacing: -0.025em;
-    }
-
-    .panel-header p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .form-stack {
-      display: grid;
-      padding: 26px;
-      gap: 22px;
-    }
-
-    .test-form {
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--surface-soft);
-    }
-
-    .test-form h3 {
-      margin-bottom: 5px;
-      font-size: 1rem;
-    }
-
-    .test-form p {
-      margin-bottom: 16px;
-      color: var(--muted);
-      font-size: 0.83rem;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 10px;
-    }
-
-    .field-group {
-      display: grid;
-      gap: 7px;
-    }
-
-    label {
-      color: #33485f;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      min-height: 44px;
-      padding: 0 13px;
-      border: 1px solid #aab9c8;
-      border-radius: 9px;
-      color: var(--ink);
-      background: #ffffff;
-    }
-
-    .form-submit {
-      min-height: 44px;
-      padding: 0 16px;
-      border: 0;
-      border-radius: 9px;
-      color: #ffffff;
-      background: var(--orange-dark);
-      cursor: pointer;
-      font-weight: 730;
-    }
-
-    input.form-submit {
-      padding: 0 16px;
-    }
-
-    .external-submit-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px 20px;
-      gap: 16px;
-    }
-
-    .external-submit-row span {
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .log-panel {
-      position: sticky;
-      top: 92px;
-      overflow: hidden;
-      background: var(--navy);
-    }
-
-    .log-panel .panel-header {
-      border-color: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-    }
-
-    .log-panel .panel-header p {
-      color: #9eb1c6;
-    }
-
-    .log-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 13px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      color: #9eb1c6;
-      font-size: 0.76rem;
-    }
-
-    .live-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .live-status::before {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #53dda7;
-      content: "";
-    }
-
-    .clear-log {
-      padding: 5px 8px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 7px;
-      color: #dbe8f5;
-      background: transparent;
-      cursor: pointer;
-      font-size: 0.75rem;
-    }
-
-    #event-log {
-      min-height: 310px;
-      max-height: 460px;
-      margin: 0;
-      padding: 17px;
-      overflow-y: auto;
-      color: #dbe8f5;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      font-size: 0.78rem;
-      white-space: pre-wrap;
-    }
-
-    .network-tip {
-      margin: 17px;
-      padding: 14px;
-      border: 1px solid rgba(60, 167, 255, 0.22);
-      border-radius: 10px;
-      color: #b8d8f1;
-      background: rgba(60, 167, 255, 0.08);
-      font-size: 0.82rem;
-    }
-
-    code {
-      padding: 2px 6px;
-      border-radius: 5px;
-      color: #ffd59d;
-      background: rgba(255, 255, 255, 0.08);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    }
-
-    .footer {
-      margin-top: 72px;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.84rem;
-      text-align: center;
-    }
-
-    @media (max-width: 880px) {
-      .hero-shell,
-      .workspace-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-shell {
-        gap: 38px;
-      }
-
-      .demo-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .demo-card {
-        min-height: auto;
-      }
-
-      .demo-card p {
-        min-height: auto;
-      }
-
-      .log-panel {
-        position: static;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .nav-shell,
-      .hero-shell,
-      main {
-        width: min(100% - 28px, 1160px);
-      }
-
-      .nav-links a {
-        display: none;
-      }
-
-      .hero-shell {
-        min-height: auto;
-        padding: 54px 0;
-      }
-
-      h1 {
-        font-size: 2.65rem;
-      }
-
-      .section-heading {
-        align-items: start;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .field-row {
-        grid-template-columns: 1fr;
-      }
-
-      .form-submit,
-      input.form-submit {
-        width: 100%;
-      }
-
-      .external-submit-row {
-        align-items: stretch;
-        flex-direction: column;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-      }
-    }
-  </style>
-
-  <!-- This test page uses the Beta Amazon Ad Tag bundle. -->
-  <script>
-    !function(w,d,s,t,a){if(w.amzn)return;w.amzn=a=function(){w.amzn.q.push([arguments,(new Date).getTime()])};a.q=[];a.version="0.0";s=d.createElement("script");s.src="https://dgly4i8n5pn3f.cloudfront.net/aat/amzn.js";s.id="amzn-pixel";s.async=true;t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t)}(window,document);
-    amzn("setRegion", "NA");
-    amzn("addTag", "ead7b209-8f99-4bb2-89ad-e7a4d07e9e6b");
-  </script>
-</head>
-<body>
-  <header class="site-header">
-    <nav class="nav-shell" aria-label="Main navigation">
-      <a class="brand" href="#top">
-        <span class="brand-mark" aria-hidden="true">S</span>
-        <span>Signal Lab</span>
-      </a>
-      <div class="nav-links">
-        <a href="#link-tests">Link tests</a>
-        <a href="#form-tests">Form tests</a>
-        <span class="environment-pill">Beta live</span>
-      </div>
-    </nav>
-  </header>
-
-  <div id="top" class="hero">
-    <div class="hero-shell">
-      <div>
-        <p class="eyebrow">Standard Events demonstration</p>
-        <h1>Test each signal on one polished page.</h1>
-        <p class="hero-copy">
-          This controlled fixture demonstrates page views, link clicks, and form submission events.
-          It collects no event attributes or form values.
-        </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#link-tests">Start the demo</a>
-          <a class="button button-secondary" href="#diagnostic-heading">Open the event log</a>
-        </div>
-      </div>
-
-      <aside class="signal-panel" aria-label="Enabled event signals">
-        <p class="panel-kicker">Signals under test</p>
-        <ul class="signal-list">
-          <li class="signal-item">
-            <span class="signal-icon" aria-hidden="true">◫</span>
-            <span>
-              <span class="signal-name">Page view</span><br>
-              <span class="signal-code">page_view</span>
-            </span>
-            <span class="status-dot" title="Active"></span>
-          </li>
-          <li class="signal-item">
-            <span class="signal-icon" aria-hidden="true">↗</span>
-            <span>
-              <span class="signal-name">Link click</span><br>
-              <span class="signal-code">click</span>
-            </span>
-            <span class="status-dot" title="Active"></span>
-          </li>
-          <li class="signal-item">
-            <span class="signal-icon" aria-hidden="true">✓</span>
-            <span>
-              <span class="signal-name">Form submission</span><br>
-              <span class="signal-code">form_submitted</span>
-            </span>
-            <span class="status-dot" title="Active"></span>
-          </li>
-        </ul>
-      </aside>
-    </div>
-  </div>
-
-  <main>
-    <section id="link-tests" aria-labelledby="link-tests-heading">
-      <div class="section-heading">
-        <div>
-          <h2 id="link-tests-heading">Link click test gallery</h2>
-          <p>Each link exercises the current <code>a[href]</code> rule. The control button must not send a link event.</p>
-        </div>
-        <span class="step-label">Test 1 of 2</span>
-      </div>
-
-      <div class="demo-grid">
-        <article class="demo-card">
-          <span class="card-number">01</span>
-          <h3>Internal destination</h3>
-          <p>Test an anchor that moves to another area on this page.</p>
-          <a id="internal-link" class="test-link" href="#internal-target">Open the internal target</a>
-        </article>
-
-        <article class="demo-card">
-          <span class="card-number">02</span>
-          <h3>External destination</h3>
-          <p>Test a link that opens a safe external example in another tab.</p>
-          <a
-            id="external-link"
-            class="test-link"
-            href="https://example.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Open the external page</a>
-        </article>
-
-        <article class="demo-card">
-          <span class="card-number">03</span>
-          <h3>Nested click target</h3>
-          <p>Test a child element inside an anchor. The parent link remains the match.</p>
-          <a id="nested-link" class="test-link" href="#nested-target">
-            <span class="nested-link-content"><span aria-hidden="true">◆</span> Click the nested content</span>
-          </a>
-        </article>
-
-        <article class="demo-card control-card">
-          <span class="card-number">04</span>
-          <h3>Negative control</h3>
-          <p>This ordinary button must update only the local diagnostic log.</p>
-          <button id="ordinary-button" class="button control-button" type="button">Run the control check</button>
-        </article>
-      </div>
-
-      <div id="internal-target" class="target-banner">
-        <span class="target-icon" aria-hidden="true">✓</span>
-        <span><strong>Internal target reached</strong>The browser followed the first test link.</span>
-      </div>
-      <div id="nested-target" class="target-banner">
-        <span class="target-icon" aria-hidden="true">✓</span>
-        <span><strong>Nested target reached</strong>The browser resolved the link from its child element.</span>
-      </div>
-    </section>
-
-    <div class="workspace-grid">
-      <section id="form-tests" class="form-panel" aria-labelledby="form-tests-heading">
-        <div class="panel-header">
-          <h2 id="form-tests-heading">Form submission test suite</h2>
-          <p>These controls exercise each selector in the managed form rule.</p>
-        </div>
-
-        <div class="form-stack">
-          <form id="standard-form" class="test-form">
-            <h3>Native button submission</h3>
-            <p>The page prevents navigation after the browser raises the submit event.</p>
-            <div class="field-row">
-              <div class="field-group">
-                <label for="standard-input">Optional test label</label>
-                <input id="standard-input" name="test-value" type="text" placeholder="No value is collected" autocomplete="off">
-              </div>
-              <button class="form-submit" type="submit">Submit with button</button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TravelHub - Standard Events Demo</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --primary: #0b1f3a;
+                --secondary: #1a3a5c;
+                --accent: #00b4d8;
+                --accent-dark: #0096b7;
+                --text: #1a1a2e;
+                --text-light: #6b7280;
+                --bg: #f0f4f8;
+                --white: #ffffff;
+                --success: #10b981;
+                --link: #0077b6;
+                --star: #f59e0b;
+                --border: #e2e8f0;
+                --danger: #ef4444;
+                --warm: #f97316;
+            }
+
+            body {
+                font-family: 'Arial', sans-serif;
+                color: var(--text);
+                background: var(--bg);
+                line-height: 1.4;
+            }
+
+            /* ═══════════════════════════════════════════
+           HEADER & NAVIGATION
+           ═══════════════════════════════════════════ */
+            .header {
+                background: var(--primary);
+                padding: 10px 20px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+
+            .logo {
+                color: var(--white);
+                font-size: 22px;
+                font-weight: 700;
+                text-decoration: none;
+                border: 1px solid transparent;
+                padding: 4px 8px;
+                border-radius: 3px;
+            }
+
+            .logo:hover {
+                border-color: var(--white);
+            }
+            .logo span {
+                color: var(--accent);
+            }
+
+            .search-bar {
+                flex: 1;
+                display: flex;
+                border-radius: 4px;
+                overflow: hidden;
+                height: 40px;
+            }
+
+            .search-bar select {
+                background: #f3f3f3;
+                border: none;
+                padding: 0 8px;
+                font-size: 12px;
+                color: var(--text-light);
+                border-right: 1px solid var(--border);
+                cursor: pointer;
+            }
+
+            .search-bar input {
+                flex: 1;
+                border: none;
+                padding: 0 12px;
+                font-size: 14px;
+                outline: none;
+            }
+
+            .search-bar button {
+                background: var(--accent);
+                border: none;
+                padding: 0 16px;
+                cursor: pointer;
+                font-size: 18px;
+                color: var(--white);
+            }
+
+            .search-bar button:hover {
+                background: var(--accent-dark);
+            }
+
+            .header-nav {
+                display: flex;
+                gap: 16px;
+                align-items: center;
+            }
+
+            .header-nav a {
+                color: var(--white);
+                text-decoration: none;
+                font-size: 12px;
+                padding: 4px 8px;
+                border: 1px solid transparent;
+                border-radius: 3px;
+            }
+
+            .header-nav a:hover {
+                border-color: var(--white);
+            }
+            .header-nav a .nav-label {
+                display: block;
+                font-size: 10px;
+                color: #ccc;
+            }
+            .header-nav a .nav-value {
+                font-size: 13px;
+                font-weight: 700;
+            }
+
+            .trips-btn {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .trips-count {
+                position: absolute;
+                top: -4px;
+                left: 12px;
+                background: var(--accent);
+                color: var(--white);
+                font-size: 12px;
+                font-weight: 700;
+                padding: 0 5px;
+                border-radius: 8px;
+            }
+
+            /* Sub-nav */
+            .sub-nav {
+                background: var(--secondary);
+                padding: 8px 20px;
+                display: flex;
+                gap: 16px;
+                overflow-x: auto;
+            }
+
+            .sub-nav a {
+                color: var(--white);
+                text-decoration: none;
+                font-size: 13px;
+                white-space: nowrap;
+                padding: 4px 8px;
+                border-radius: 3px;
+            }
+
+            .sub-nav a:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            /* ═══════════════════════════════════════════
+           HERO BANNER
+           ═══════════════════════════════════════════ */
+            .hero {
+                background: linear-gradient(135deg, #0b1f3a 0%, #1a3a5c 40%, #00b4d8 100%);
+                padding: 50px 20px;
+                text-align: center;
+                color: var(--white);
+            }
+
+            .hero h1 {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+            .hero p {
+                font-size: 16px;
+                color: #b8e4f0;
+                margin-bottom: 20px;
+            }
+
+            .hero-cta {
+                display: inline-block;
+                background: var(--accent);
+                color: var(--white);
+                padding: 12px 32px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 14px;
+                text-decoration: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            .hero-cta:hover {
+                background: var(--accent-dark);
+            }
+
+            /* ═══════════════════════════════════════════
+           MAIN CONTENT
+           ═══════════════════════════════════════════ */
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+                font-weight: 700;
+                margin-bottom: 16px;
+                color: var(--text);
+            }
+
+            /* ═══════════════════════════════════════════
+           DESTINATION GRID (PRODUCT GRID)
+           ═══════════════════════════════════════════ */
+            .product-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 16px;
+                margin-bottom: 40px;
+            }
+
+            .product-card {
+                background: var(--white);
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                padding: 16px;
+                transition: box-shadow 0.2s;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .product-card:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .product-image {
+                width: 100%;
+                height: 160px;
+                background: linear-gradient(135deg, #e0f7fa, #f0f4f8);
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 12px;
+                font-size: 48px;
+            }
+
+            .product-badge {
+                display: inline-block;
+                background: var(--accent);
+                color: var(--white);
+                font-size: 11px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 3px;
+                margin-bottom: 8px;
+                width: fit-content;
+            }
+
+            .product-title {
+                font-size: 14px;
+                color: var(--link);
+                margin-bottom: 6px;
+                cursor: pointer;
+                line-height: 1.3;
+            }
+
+            .product-title:hover {
+                color: var(--accent-dark);
+                text-decoration: underline;
+            }
+
+            .product-rating {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                margin-bottom: 6px;
+            }
+
+            .stars {
+                color: var(--star);
+                font-size: 14px;
+            }
+            .rating-count {
+                font-size: 12px;
+                color: var(--link);
+            }
+
+            .product-price {
+                font-size: 20px;
+                font-weight: 700;
+                margin-bottom: 4px;
+                color: var(--text);
+            }
+
+            .product-price .currency {
+                font-size: 14px;
+            }
+            .product-price .per-person {
+                font-size: 12px;
+                color: var(--text-light);
+                font-weight: 400;
+            }
+
+            .product-original-price {
+                font-size: 12px;
+                color: var(--text-light);
+                text-decoration: line-through;
+                margin-bottom: 8px;
+            }
+
+            .product-delivery {
+                font-size: 12px;
+                color: var(--text-light);
+                margin-bottom: 12px;
+            }
+
+            .product-delivery strong {
+                color: var(--success);
+            }
+
+            .btn-add-to-cart {
+                background: var(--accent);
+                border: 1px solid var(--accent-dark);
+                border-radius: 20px;
+                padding: 8px 16px;
+                font-size: 13px;
+                cursor: pointer;
+                font-weight: 500;
+                width: 100%;
+                margin-top: auto;
+                color: var(--white);
+            }
+
+            .btn-add-to-cart:hover {
+                background: var(--accent-dark);
+            }
+
+            .btn-buy-now {
+                background: var(--warm);
+                border: 1px solid #ea580c;
+                border-radius: 20px;
+                padding: 8px 16px;
+                font-size: 13px;
+                cursor: pointer;
+                font-weight: 500;
+                width: 100%;
+                margin-top: 8px;
+                color: var(--white);
+            }
+
+            .btn-buy-now:hover {
+                background: #ea580c;
+            }
+
+            /* ═══════════════════════════════════════════
+           DEALS SECTION
+           ═══════════════════════════════════════════ */
+            .deals-banner {
+                background: var(--white);
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                padding: 20px;
+                margin-bottom: 40px;
+            }
+
+            .deals-banner h2 {
+                color: var(--danger);
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+
+            .deals-row {
+                display: flex;
+                gap: 16px;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .deal-item {
+                min-width: 180px;
+                text-align: center;
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 6px;
+                transition: background 0.2s;
+            }
+
+            .deal-item:hover {
+                background: #f0f9ff;
+            }
+
+            .deal-badge {
+                background: var(--danger);
+                color: white;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 2px 6px;
+                border-radius: 3px;
+                display: inline-block;
+                margin-bottom: 8px;
+            }
+
+            .deal-image {
+                width: 120px;
+                height: 120px;
+                background: linear-gradient(135deg, #e0f7fa, #f0f4f8);
+                border-radius: 8px;
+                margin: 0 auto 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 36px;
+            }
+
+            .deal-title {
+                font-size: 12px;
+                color: var(--text);
+                margin-bottom: 4px;
+            }
+            .deal-price {
+                font-weight: 700;
+                font-size: 14px;
+                color: var(--secondary);
+            }
+
+            /* ═══════════════════════════════════════════
+           NEWSLETTER / SUBSCRIBE
+           ═══════════════════════════════════════════ */
+            .subscribe-section {
+                background: var(--secondary);
+                padding: 30px 20px;
+                text-align: center;
+                margin-bottom: 40px;
+                border-radius: 8px;
+            }
+
+            .subscribe-section h3 {
+                color: var(--white);
+                margin-bottom: 8px;
+                font-size: 18px;
+            }
+            .subscribe-section p {
+                color: #b8e4f0;
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            .subscribe-form {
+                display: flex;
+                max-width: 400px;
+                margin: 0 auto;
+                gap: 8px;
+            }
+
+            .subscribe-form input {
+                flex: 1;
+                padding: 10px 14px;
+                border: none;
+                border-radius: 4px;
+                font-size: 13px;
+            }
+
+            .subscribe-form button {
+                background: var(--accent);
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-weight: 700;
+                font-size: 13px;
+                cursor: pointer;
+                color: var(--white);
+            }
+
+            .subscribe-form button:hover {
+                background: var(--accent-dark);
+            }
+
+            /* ═══════════════════════════════════════════
+           BOOKING SUMMARY (CART EQUIVALENT)
+           ═══════════════════════════════════════════ */
+            .booking-section {
+                background: var(--white);
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                padding: 24px;
+                margin-bottom: 40px;
+            }
+
+            .booking-section h3 {
+                margin-bottom: 16px;
+                font-size: 16px;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 10px;
+            }
+
+            .booking-item {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 12px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .booking-item-image {
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(135deg, #e0f7fa, #f0f4f8);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+            }
+
+            .booking-item-details {
+                flex: 1;
+            }
+            .booking-item-title {
+                font-size: 14px;
+                color: var(--link);
+                margin-bottom: 4px;
+            }
+            .booking-item-meta {
+                font-size: 12px;
+                color: var(--text-light);
+                margin-bottom: 4px;
+            }
+            .booking-item-price {
+                font-weight: 700;
+                font-size: 16px;
+            }
+
+            .booking-item-remove {
+                background: none;
+                border: none;
+                color: var(--danger);
+                font-size: 12px;
+                cursor: pointer;
+                padding: 4px;
+            }
+
+            .booking-item-remove:hover {
+                text-decoration: underline;
+            }
+
+            .booking-summary {
+                margin-top: 16px;
+                padding-top: 16px;
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .booking-total {
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .btn-checkout {
+                background: var(--accent);
+                border: 1px solid var(--accent-dark);
+                border-radius: 4px;
+                padding: 12px 32px;
+                font-size: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                color: var(--white);
+            }
+
+            .btn-checkout:hover {
+                background: var(--accent-dark);
+            }
+
+            .btn-purchase {
+                background: var(--success);
+                border: 1px solid #059669;
+                border-radius: 8px;
+                padding: 12px 32px;
+                font-size: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                width: 100%;
+                margin-top: 12px;
+                color: var(--white);
+            }
+
+            .btn-purchase:hover {
+                background: #059669;
+            }
+
+            /* ═══════════════════════════════════════════
+           SIGN UP SECTION
+           ═══════════════════════════════════════════ */
+            .signup-section {
+                background: var(--white);
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                padding: 24px;
+                margin-bottom: 40px;
+                max-width: 380px;
+                text-align: center;
+            }
+
+            .signup-section h3 {
+                margin-bottom: 4px;
+                font-size: 22px;
+            }
+            .signup-section .subtitle {
+                color: var(--text-light);
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                font-size: 13px;
+                outline: none;
+            }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.1);
+            }
+
+            .btn-signup {
+                background: var(--accent);
+                border: 1px solid var(--accent-dark);
+                border-radius: 4px;
+                padding: 10px 24px;
+                font-size: 13px;
+                font-weight: 700;
+                cursor: pointer;
+                width: 100%;
+                margin-top: 12px;
+                color: var(--white);
+            }
+
+            .btn-signup:hover {
+                background: var(--accent-dark);
+            }
+
+            .signup-divider {
+                margin: 16px 0;
+                text-align: center;
+                color: var(--text-light);
+                font-size: 12px;
+            }
+
+            .btn-signin {
+                background: #e7e9ec;
+                border: 1px solid #adb1b8;
+                border-radius: 4px;
+                padding: 8px 24px;
+                font-size: 13px;
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .btn-signin:hover {
+                background: #dfe3e8;
+            }
+
+            /* ═══════════════════════════════════════════
+           CONTACT / SUPPORT FORM
+           ═══════════════════════════════════════════ */
+            .contact-section {
+                background: var(--white);
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                padding: 24px;
+                margin-bottom: 40px;
+                max-width: 500px;
+            }
+
+            .contact-section h3 {
+                margin-bottom: 16px;
+                font-size: 16px;
+            }
+
+            .btn-submit {
+                background: var(--accent);
+                border: 1px solid var(--accent-dark);
+                border-radius: 4px;
+                padding: 10px 24px;
+                font-size: 13px;
+                font-weight: 700;
+                cursor: pointer;
+                width: 100%;
+                color: var(--white);
+            }
+
+            .btn-submit:hover {
+                background: var(--accent-dark);
+            }
+
+            /* ═══════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════ */
+            .footer {
+                background: var(--secondary);
+                padding: 30px 20px;
+                text-align: center;
+            }
+
+            .footer-links {
+                margin-bottom: 16px;
+            }
+
+            .footer-links a {
+                color: #ddd;
+                text-decoration: none;
+                font-size: 13px;
+                margin: 0 12px;
+            }
+
+            .footer-links a:hover {
+                text-decoration: underline;
+            }
+
+            .footer-copyright {
+                color: #94a3b8;
+                font-size: 11px;
+            }
+
+            /* ═══════════════════════════════════════════
+           NOTIFICATIONS
+           ═══════════════════════════════════════════ */
+            .notification {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary);
+                color: var(--white);
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-size: 13px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                z-index: 9999;
+                display: none;
+                animation: slideIn 0.3s ease;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(20px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .notification.show {
+                display: block;
+            }
+
+            /* ═══════════════════════════════════════════
+           COOKIE CONSENT BANNER
+           ═══════════════════════════════════════════ */
+            .cookie-consent {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 10000;
+                background: var(--primary);
+                color: var(--white);
+                padding: 16px 20px;
+                box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.25);
+                display: none;
+            }
+
+            .cookie-consent.show {
+                display: block;
+            }
+
+            .cookie-consent-inner {
+                max-width: 1400px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .cookie-consent-text {
+                flex: 1;
+                min-width: 260px;
+                font-size: 13px;
+                line-height: 1.5;
+                color: #dbe7f0;
+            }
+
+            .cookie-consent-text a {
+                color: var(--accent);
+                text-decoration: underline;
+            }
+
+            .cookie-consent-actions {
+                display: flex;
+                gap: 10px;
+                flex-shrink: 0;
+            }
+
+            .cookie-btn {
+                border-radius: 4px;
+                padding: 10px 22px;
+                font-size: 13px;
+                font-weight: 700;
+                cursor: pointer;
+                border: 1px solid transparent;
+            }
+
+            .cookie-btn-decline {
+                background: transparent;
+                color: var(--white);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+
+            .cookie-btn-decline:hover {
+                border-color: var(--white);
+            }
+
+            .cookie-btn-accept {
+                background: var(--accent);
+                color: var(--white);
+                border-color: var(--accent-dark);
+            }
+
+            .cookie-btn-accept:hover {
+                background: var(--accent-dark);
+            }
+
+
+            /* Standard Events demo area */
+            .standard-events-lab {
+                margin: 34px 0;
+                overflow: hidden;
+                border: 1px solid #b9dce8;
+                border-radius: 12px;
+                background: var(--white);
+                box-shadow: 0 10px 30px rgba(11, 31, 58, 0.1);
+            }
+
+            .standard-events-lab-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 24px 28px;
+                color: var(--white);
+                background: linear-gradient(125deg, var(--primary), #164e68);
+                gap: 20px;
+            }
+
+            .standard-events-lab-header h2 {
+                margin-bottom: 6px;
+                font-size: 24px;
+            }
+
+            .standard-events-lab-header p {
+                max-width: 760px;
+                color: #d6edf5;
+                font-size: 14px;
+            }
+
+            .standard-events-badge {
+                flex: 0 0 auto;
+                padding: 7px 12px;
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.12);
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            .standard-events-signal-row {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                padding: 18px 28px;
+                border-bottom: 1px solid var(--border);
+                background: #f8fbfd;
+                gap: 14px;
+            }
+
+            .standard-events-signal {
+                display: flex;
+                align-items: center;
+                padding: 12px 14px;
+                border: 1px solid #d8e7ee;
+                border-radius: 8px;
+                background: var(--white);
+                gap: 10px;
+            }
+
+            .standard-events-signal-icon {
+                display: grid;
+                width: 34px;
+                height: 34px;
+                place-items: center;
+                border-radius: 50%;
+                color: #075f74;
+                background: #dff6fb;
+            }
+
+            .standard-events-signal strong {
+                display: block;
+                font-size: 13px;
+            }
+
+            .standard-events-signal code {
+                color: var(--text-light);
+                font-size: 11px;
+            }
+
+            .standard-events-content {
+                display: grid;
+                grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+                padding: 26px 28px 30px;
+                gap: 24px;
+            }
+
+            .standard-events-test-column h3,
+            .standard-events-log-column h3 {
+                margin-bottom: 6px;
+                font-size: 17px;
+            }
+
+            .standard-events-helper {
+                margin-bottom: 16px;
+                color: var(--text-light);
+                font-size: 13px;
+            }
+
+            .standard-events-link-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                margin-bottom: 20px;
+                gap: 12px;
+            }
+
+            .standard-events-test-link,
+            .standard-events-control-card {
+                display: flex;
+                min-height: 82px;
+                align-items: center;
+                padding: 14px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--link);
+                background: #f8fafc;
+                font-size: 13px;
+                font-weight: 700;
+                text-decoration: none;
+                gap: 11px;
+            }
+
+            .standard-events-test-link:hover {
+                border-color: var(--accent);
+                background: #edfafd;
+            }
+
+            .standard-events-control-card {
+                color: var(--text);
+            }
+
+            .standard-events-control-card button {
+                border: 1px solid #aab8c5;
+                border-radius: 5px;
+                padding: 8px 11px;
+                color: var(--text);
+                background: var(--white);
+                cursor: pointer;
+                font-weight: 700;
+            }
+
+            .standard-events-form-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .standard-events-form {
+                padding: 14px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: #f8fafc;
+            }
+
+            .standard-events-form label {
+                display: block;
+                margin-bottom: 7px;
+                color: var(--text-light);
+                font-size: 12px;
+                font-weight: 700;
+            }
+
+            .standard-events-form input[type='text'] {
+                width: 100%;
+                margin-bottom: 10px;
+                border: 1px solid #b8c6d1;
+                border-radius: 5px;
+                padding: 9px 10px;
+            }
+
+            .standard-events-submit {
+                width: 100%;
+                border: none;
+                border-radius: 5px;
+                padding: 9px 12px;
+                color: var(--white);
+                background: var(--accent-dark);
+                cursor: pointer;
+                font-weight: 700;
+            }
+
+            .standard-events-external-submit {
+                margin-top: 10px;
+            }
+
+            .standard-events-log-column {
+                overflow: hidden;
+                border-radius: 9px;
+                color: #eaf5fa;
+                background: var(--primary);
+            }
+
+            .standard-events-log-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 16px 17px 12px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            }
+
+            .standard-events-log-header p {
+                margin: 0;
+                color: #a9c2d0;
+                font-size: 11px;
+            }
+
+            .standard-events-clear-log {
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 5px;
+                padding: 6px 9px;
+                color: var(--white);
+                background: transparent;
+                cursor: pointer;
+                font-size: 11px;
+            }
+
+            #standard-events-log {
+                min-height: 270px;
+                max-height: 380px;
+                margin: 0;
+                padding: 16px;
+                overflow-y: auto;
+                color: #dcecf3;
+                font-family: Consolas, Monaco, monospace;
+                font-size: 12px;
+                line-height: 1.7;
+                white-space: pre-wrap;
+            }
+
+            .standard-events-network-tip {
+                margin: 0 16px 16px;
+                padding: 11px;
+                border: 1px solid rgba(0, 180, 216, 0.3);
+                border-radius: 6px;
+                color: #bde9f2;
+                background: rgba(0, 180, 216, 0.1);
+                font-size: 11px;
+            }
+
+            @media (max-width: 900px) {
+                .standard-events-content {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 650px) {
+                .standard-events-lab-header {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+
+                .standard-events-signal-row,
+                .standard-events-link-grid,
+                .standard-events-form-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .standard-events-content,
+                .standard-events-lab-header,
+                .standard-events-signal-row {
+                    padding-right: 18px;
+                    padding-left: 18px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ═══════════════════════════════════════════
+         HEADER
+         ═══════════════════════════════════════════ -->
+        <header class="header">
+            <a href="#" class="logo">Travel<span>Hub</span></a>
+
+            <div class="search-bar">
+                <select id="search-category">
+                    <option>All Trips</option>
+                    <option>Flights</option>
+                    <option>Hotels</option>
+                    <option>Vacation Packages</option>
+                    <option>Car Rentals</option>
+                    <option>Cruises</option>
+                </select>
+                <input type="text" id="search-input" placeholder="Where do you want to go?" />
+                <button id="search-btn">🔍</button>
             </div>
-          </form>
 
-          <form id="input-submit-form" class="test-form">
-            <h3>Input control submission</h3>
-            <p>This form uses an input element instead of a button.</p>
-            <div class="field-row">
-              <div class="field-group">
-                <label for="input-submit-value">Optional test label</label>
-                <input id="input-submit-value" name="input-submit-value" type="text" placeholder="No value is collected" autocomplete="off">
-              </div>
-              <input class="form-submit" type="submit" value="Submit with input">
+            <div class="header-nav">
+                <a href="#signup-section">
+                    <span class="nav-label">Hello, Traveler</span>
+                    <span class="nav-value">Account</span>
+                </a>
+                <a href="#" id="bookings-link">
+                    <span class="nav-label">My Trips</span>
+                    <span class="nav-value">& Bookings</span>
+                </a>
+                <a href="#booking-section" class="trips-btn" id="trips-link">
+                    <span class="trips-count" id="trips-count">0</span>
+                    <span class="nav-value">✈️ Trips</span>
+                </a>
             </div>
-          </form>
+        </header>
 
-          <form id="external-button-form" class="test-form">
-            <h3>External button submission</h3>
-            <p>The submit control appears outside this form and connects through its form attribute.</p>
-            <div class="field-group">
-              <label for="external-input">Optional test label</label>
-              <input id="external-input" name="another-test-value" type="text" placeholder="No value is collected" autocomplete="off">
+        <!-- Sub navigation -->
+        <nav class="sub-nav">
+            <a href="#">Last-Minute Deals</a>
+            <a href="#">Flights</a>
+            <a href="#">Hotels</a>
+            <a href="#">Vacation Packages</a>
+            <a href="#">Car Rentals</a>
+            <a href="#">Cruises</a>
+            <a href="#">Travel Insurance</a>
+            <a href="#contact-section">Support</a>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+         HERO BANNER
+         ═══════════════════════════════════════════ -->
+        <section class="hero">
+            <h1>Explore the World — Save Up to 40%</h1>
+            <p>Flights, hotels, and vacation packages at unbeatable prices</p>
+            <button class="hero-cta" id="explore-deals-btn">Explore All Deals</button>
+        </section>
+
+        <div class="container">
+            <!-- ═══════════════════════════════════════════
+             DESTINATION LISTINGS
+             ═══════════════════════════════════════════ -->
+            <h2 class="section-title">Popular Destinations</h2>
+            <div class="product-grid" id="destination-grid">
+                <!-- Destinations injected by JS -->
             </div>
-          </form>
+
+            <!-- ═══════════════════════════════════════════
+             FLASH DEALS
+             ═══════════════════════════════════════════ -->
+            <div class="deals-banner">
+                <h2>⚡ Flash Travel Deals</h2>
+                <div class="deals-row">
+                    <div class="deal-item" data-deal-id="deal-1">
+                        <span class="deal-badge">40% off</span>
+                        <div class="deal-image">🏖️</div>
+                        <div class="deal-title">Cancún All-Inclusive</div>
+                        <div class="deal-price">$899/person</div>
+                    </div>
+                    <div class="deal-item" data-deal-id="deal-2">
+                        <span class="deal-badge">35% off</span>
+                        <div class="deal-image">🗼</div>
+                        <div class="deal-title">Paris City Break</div>
+                        <div class="deal-price">$1,199/person</div>
+                    </div>
+                    <div class="deal-item" data-deal-id="deal-3">
+                        <span class="deal-badge">50% off</span>
+                        <div class="deal-image">🏔️</div>
+                        <div class="deal-title">Swiss Alps Retreat</div>
+                        <div class="deal-price">$749/person</div>
+                    </div>
+                    <div class="deal-item" data-deal-id="deal-4">
+                        <span class="deal-badge">30% off</span>
+                        <div class="deal-image">🌴</div>
+                        <div class="deal-title">Bali Paradise</div>
+                        <div class="deal-price">$1,049/person</div>
+                    </div>
+                    <div class="deal-item" data-deal-id="deal-5">
+                        <span class="deal-badge">25% off</span>
+                        <div class="deal-image">🎰</div>
+                        <div class="deal-title">Las Vegas Weekend</div>
+                        <div class="deal-price">$399/person</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+             NEWSLETTER
+             ═══════════════════════════════════════════ -->
+            <div class="subscribe-section">
+                <h3>📬 Travel Alerts & Exclusive Offers</h3>
+                <p>Be the first to know about fare drops and secret deals</p>
+                <form class="subscribe-form" id="subscribe-form">
+                    <input type="email" id="subscribe-email" placeholder="Enter your email" required />
+                    <button type="submit" id="subscribe-btn">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+             BOOKING SUMMARY (CART EQUIVALENT)
+             ═══════════════════════════════════════════ -->
+            <div class="booking-section" id="booking-section">
+                <h3>✈️ Your Trip Summary</h3>
+                <div id="booking-items">
+                    <div class="booking-item" data-booking-id="bk-1">
+                        <div class="booking-item-image">🏨</div>
+                        <div class="booking-item-details">
+                            <div class="booking-item-title">Grand Plaza Hotel — Tokyo, 3 Nights</div>
+                            <div class="booking-item-meta">Check-in: Jul 15 • Check-out: Jul 18</div>
+                            <div class="booking-item-price" data-price="540">$540.00</div>
+                        </div>
+                        <button class="booking-item-remove">Remove</button>
+                    </div>
+                    <div class="booking-item" data-booking-id="bk-2">
+                        <div class="booking-item-image">✈️</div>
+                        <div class="booking-item-details">
+                            <div class="booking-item-title">Round-trip Flight: SFO → NRT (Economy)</div>
+                            <div class="booking-item-meta">Depart: Jul 14 • Return: Jul 19</div>
+                            <div class="booking-item-price" data-price="892">$892.00</div>
+                        </div>
+                        <button class="booking-item-remove">Remove</button>
+                    </div>
+                </div>
+                <div class="booking-summary">
+                    <div class="booking-total">Trip Total: <strong>$1,432.00</strong></div>
+                    <button class="btn-checkout" id="checkout-btn">Continue to Payment</button>
+                </div>
+                <button class="btn-purchase" id="purchase-btn">🔒 Confirm & Book Now</button>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+             SIGN UP
+             ═══════════════════════════════════════════ -->
+            <div class="signup-section" id="signup-section">
+                <h3>Join TravelHub</h3>
+                <p class="subtitle">Unlock member-only prices and rewards</p>
+                <div class="form-group">
+                    <input type="text" id="signup-name" placeholder="Full name" />
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Email address" />
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signup-password" placeholder="Create password" />
+                </div>
+                <button class="btn-signup" id="signup-btn">Create your TravelHub account</button>
+                <div class="signup-divider">— Already a member? —</div>
+                <button class="btn-signin" id="signin-btn">Sign in</button>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+             CONTACT / SUPPORT FORM
+             ═══════════════════════════════════════════ -->
+            <div class="contact-section" id="contact-section">
+                <h3>📞 Travel Support</h3>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="contact-name" placeholder="Jane Traveler" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="contact-email" placeholder="jane@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Booking Reference (optional)</label>
+                        <input type="text" id="contact-ref" placeholder="TH-123456" />
+                    </div>
+                    <div class="form-group">
+                        <label>How can we help?</label>
+                        <textarea id="contact-message" rows="4" placeholder="Describe your issue or question..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" id="contact-submit-btn">Submit Request</button>
+                </form>
+            </div>
         </div>
 
-        <div class="external-submit-row">
-          <span>The following button belongs to the form above.</span>
-          <button class="form-submit" type="submit" form="external-button-form">Submit external form</button>
+
+
+        <!-- Standard Events POC test area -->
+        <div class="container">
+            <section class="standard-events-lab" id="standard-events-lab" aria-labelledby="standard-events-heading">
+                <div class="standard-events-lab-header">
+                    <div>
+                        <h2 id="standard-events-heading">Standard Events Demo Lab</h2>
+                        <p>
+                            Use these controls to demonstrate page-view, link-click, and form-submission signals.
+                            The managed rules collect event names only.
+                        </p>
+                    </div>
+                    <span class="standard-events-badge">Beta POC</span>
+                </div>
+
+                <div class="standard-events-signal-row" aria-label="Signals under test">
+                    <div class="standard-events-signal">
+                        <span class="standard-events-signal-icon" aria-hidden="true">◫</span>
+                        <span><strong>Page view</strong><code>page_view</code></span>
+                    </div>
+                    <div class="standard-events-signal">
+                        <span class="standard-events-signal-icon" aria-hidden="true">↗</span>
+                        <span><strong>Link click</strong><code>click</code></span>
+                    </div>
+                    <div class="standard-events-signal">
+                        <span class="standard-events-signal-icon" aria-hidden="true">✓</span>
+                        <span><strong>Form submission</strong><code>form_submitted</code></span>
+                    </div>
+                </div>
+
+                <div class="standard-events-content">
+                    <div class="standard-events-test-column">
+                        <h3>Link tests</h3>
+                        <p class="standard-events-helper">
+                            The first three controls match <code>a[href]</code>. The ordinary button is a negative control.
+                        </p>
+                        <div class="standard-events-link-grid">
+                            <a id="standard-events-internal-link" class="standard-events-test-link" href="#standard-events-form-tests">
+                                <span aria-hidden="true">🧭</span>
+                                <span>Open the form test area</span>
+                            </a>
+                            <a
+                                id="standard-events-external-link"
+                                class="standard-events-test-link"
+                                href="https://example.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <span aria-hidden="true">🌐</span>
+                                <span>Open an external example</span>
+                            </a>
+                            <a id="standard-events-nested-link" class="standard-events-test-link" href="#standard-events-log-panel">
+                                <span aria-hidden="true">◆</span>
+                                <span><strong>Click this nested text</strong><br>Open the diagnostic log</span>
+                            </a>
+                            <div class="standard-events-control-card">
+                                <span aria-hidden="true">⊘</span>
+                                <button id="standard-events-control-button" type="button">Run negative control</button>
+                            </div>
+                        </div>
+
+                        <h3 id="standard-events-form-tests">Form tests</h3>
+                        <p class="standard-events-helper">
+                            The controls cover a submit button, submit input, and a button outside its form.
+                        </p>
+                        <div class="standard-events-form-grid">
+                            <form id="standard-events-button-form" class="standard-events-form">
+                                <label for="standard-events-button-value">Button form</label>
+                                <input id="standard-events-button-value" type="text" placeholder="No value is collected" autocomplete="off">
+                                <button class="standard-events-submit" type="submit">Submit with button</button>
+                            </form>
+
+                            <form id="standard-events-input-form" class="standard-events-form">
+                                <label for="standard-events-input-value">Input form</label>
+                                <input id="standard-events-input-value" type="text" placeholder="No value is collected" autocomplete="off">
+                                <input class="standard-events-submit" type="submit" value="Submit with input">
+                            </form>
+
+                            <form id="standard-events-external-form" class="standard-events-form">
+                                <label for="standard-events-external-value">External control form</label>
+                                <input id="standard-events-external-value" type="text" placeholder="No value is collected" autocomplete="off">
+                            </form>
+                            <div class="standard-events-form">
+                                <label>Button linked through the form attribute</label>
+                                <button
+                                    class="standard-events-submit standard-events-external-submit"
+                                    type="submit"
+                                    form="standard-events-external-form"
+                                >Submit external form</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="standard-events-log-column" id="standard-events-log-panel" aria-labelledby="standard-events-log-heading">
+                        <div class="standard-events-log-header">
+                            <div>
+                                <h3 id="standard-events-log-heading">Interaction log</h3>
+                                <p>Local diagnostics only</p>
+                            </div>
+                            <button id="standard-events-clear-log" class="standard-events-clear-log" type="button">Clear</button>
+                        </div>
+                        <div id="standard-events-log" role="log" aria-live="polite"></div>
+                        <p class="standard-events-network-tip">
+                            Open Chrome DevTools. Filter the Network panel for <code>iu3</code> to verify AAT requests.
+                        </p>
+                    </aside>
+                </div>
+            </section>
         </div>
-      </section>
 
-      <section class="log-panel" aria-labelledby="diagnostic-heading">
-        <div class="panel-header">
-          <h2 id="diagnostic-heading">Diagnostic event log</h2>
-          <p>This local log confirms each page interaction.</p>
+        <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#">About TravelHub</a>
+                <a href="#">Careers</a>
+                <a href="#">Travel Blog</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help Center</a>
+            </div>
+            <div class="footer-copyright">
+                © 2026 TravelHub.com — Demo site for tag manager and Standard Events testing
+            </div>
+        </footer>
+
+        <!-- Notification toast -->
+        <div class="notification" id="notification"></div>
+
+        <!-- ═══════════════════════════════════════════
+         COOKIE CONSENT BANNER
+         ═══════════════════════════════════════════ -->
+        <div class="cookie-consent" id="cookie-consent" role="dialog" aria-live="polite" aria-label="Cookie consent">
+            <div class="cookie-consent-inner">
+                <div class="cookie-consent-text">
+                    We use cookies to personalize content and measure advertising.
+                    See our <a href="#" id="cookie-policy-link">Cookie Policy</a>.
+                </div>
+                <div class="cookie-consent-actions">
+                    <button type="button" class="cookie-btn cookie-btn-decline" id="cookie-decline">Decline</button>
+                    <button type="button" class="cookie-btn cookie-btn-accept" id="cookie-accept">Accept</button>
+                </div>
+            </div>
         </div>
-        <div class="log-toolbar">
-          <span class="live-status">Listening</span>
-          <button id="clear-log" class="clear-log" type="button">Clear log</button>
-        </div>
-        <div id="event-log" role="log" aria-live="polite"></div>
-        <p class="network-tip">
-          Open Chrome DevTools. Select Network, then filter for <code>iu3</code> to verify the AAT requests.
-        </p>
-      </section>
-    </div>
 
-    <footer class="footer">
-      Signal Lab is a controlled Standard Events POC fixture. It does not collect page content or submitted values.
-    </footer>
-  </main>
+        <!-- Beta Amazon Ad Tag for the Standard Events POC -->
+        <script>
+            !(function (w, d, s, t, a) {
+                if (w.amzn) return;
+                w.amzn = a = function () {
+                    w.amzn.q.push([arguments, new Date().getTime()]);
+                };
+                a.q = [];
+                a.version = '0.0';
+                s = d.createElement('script');
+                s.src = 'https://dgly4i8n5pn3f.cloudfront.net/aat/amzn.js';
+                s.id = 'amzn-pixel';
+                s.async = true;
+                t = d.getElementsByTagName('script')[0];
+                t.parentNode.insertBefore(s, t);
 
-  <script>
-    const eventLog = document.getElementById("event-log");
+                var c = d.createElement('script');
+                c.src = 'https://d1leee6d0c4cew.cloudfront.net/aat/amzn-consent.js';
+                c.async = true;
+                t.parentNode.insertBefore(c, t);
+            })(window, document);
+            amzn('setRegion', 'NA');
+            amzn('addTag', 'ead7b209-8f99-4bb2-89ad-e7a4d07e9e6b');
+        </script>
 
-    function addLog(message) {
-      const time = new Date().toLocaleTimeString();
-      eventLog.textContent += `[${time}] ${message}\n`;
-      eventLog.scrollTop = eventLog.scrollHeight;
-    }
+        <!-- ═══════════════════════════════════════════
+         COOKIE CONSENT BANNER WIRING
+         ═══════════════════════════════════════════ -->
+        <script>
+            (function () {
+                var CHOICE_COOKIE = 'th_consent_choice';
+                var MAX_AGE = 28 * 24 * 60 * 60; // ~28 days in seconds
 
-    window.addEventListener("load", () => {
-      addLog("Page load completed");
-    });
+                function readCookie(name) {
+                    var match = document.cookie.match(
+                        new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)')
+                    );
+                    return match ? match[1] : null;
+                }
 
-    document.addEventListener("click", (event) => {
-      const link = event.target.closest("a[href]");
+                function recordChoice(value) {
+                    document.cookie = CHOICE_COOKIE + '=' + value + ';path=/;max-age=' + MAX_AGE;
+                }
 
-      if (link) {
-        addLog(`Link click observed: ${link.id || "navigation-link"}`);
-      }
-    });
+                function showBanner() {
+                    var el = document.getElementById('cookie-consent');
+                    if (el) el.classList.add('show');
+                }
 
-    document.querySelectorAll("form").forEach((form) => {
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        addLog(`Form submit event observed: ${form.id}`);
-      });
-    });
+                function hideBanner() {
+                    var el = document.getElementById('cookie-consent');
+                    if (el) el.classList.remove('show');
+                }
 
-    document.getElementById("ordinary-button").addEventListener("click", () => {
-      addLog("Ordinary button control observed");
-    });
+                function init() {
+                    // Accept: grant ad-storage + user-data via the consent library.
+                    document.getElementById('cookie-accept').addEventListener('click', function () {
+                        window.amznConsent()
+                            .setCountryCode('US')
+                            .setEnableAdStorage(true)
+                            .setEnableUserData(true)
+                            .build(); // library writes amzn_consent cookie + dispatches amznConsentChange
+                        recordChoice('accepted');
+                        hideBanner();
+                    });
 
-    document.getElementById("clear-log").addEventListener("click", () => {
-      eventLog.textContent = "";
-      addLog("Diagnostic log cleared");
-    });
-  </script>
-</body>
+                    // Decline: deny both grants via the consent library.
+                    document.getElementById('cookie-decline').addEventListener('click', function () {
+                        window.amznConsent()
+                            .setCountryCode('US')
+                            .setEnableAdStorage(false)
+                            .setEnableUserData(false)
+                            .build();
+                        recordChoice('declined');
+                        hideBanner();
+                    });
+
+                    // Show the banner only if the visitor hasn't made a choice yet.
+                    // Gate on our own flag, not amzn_consent (the library may set a default).
+                    if (!readCookie(CHOICE_COOKIE)) {
+                        showBanner();
+                    }
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', init);
+                } else {
+                    init();
+                }
+            })();
+        </script>
+
+        <!-- ═══════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════ -->
+        <script>
+            // ─── DESTINATION DATA ───
+            const destinations = [
+                {
+                    id: 'D001',
+                    name: 'Tokyo Adventure — 5 Days / 4 Nights',
+                    price: 1299,
+                    originalPrice: 1799,
+                    rating: 4.8,
+                    reviews: 3241,
+                    emoji: '🗾',
+                    category: 'Packages',
+                    type: 'Asia',
+                },
+                {
+                    id: 'D002',
+                    name: 'Santorini Escape — Oceanview Suite, 4 Nights',
+                    price: 1599,
+                    originalPrice: 2199,
+                    rating: 4.9,
+                    reviews: 2876,
+                    emoji: '🇬🇷',
+                    category: 'Hotels',
+                    type: 'Europe',
+                },
+                {
+                    id: 'D003',
+                    name: 'NYC to London — Round-trip Economy Flight',
+                    price: 449,
+                    originalPrice: 689,
+                    rating: 4.5,
+                    reviews: 8932,
+                    emoji: '✈️',
+                    category: 'Flights',
+                    type: 'Transatlantic',
+                },
+                {
+                    id: 'D004',
+                    name: 'Costa Rica Rainforest Eco-Lodge — 6 Nights',
+                    price: 899,
+                    originalPrice: 1299,
+                    rating: 4.7,
+                    reviews: 1567,
+                    emoji: '🌿',
+                    category: 'Hotels',
+                    type: 'Central America',
+                },
+                {
+                    id: 'D005',
+                    name: 'Mediterranean Cruise — 7 Days All-Inclusive',
+                    price: 2199,
+                    originalPrice: 3199,
+                    rating: 4.6,
+                    reviews: 4521,
+                    emoji: '🚢',
+                    category: 'Cruises',
+                    type: 'Europe',
+                },
+                {
+                    id: 'D006',
+                    name: 'Iceland Northern Lights Tour — 3 Nights',
+                    price: 1049,
+                    originalPrice: 1449,
+                    rating: 4.8,
+                    reviews: 2103,
+                    emoji: '🌌',
+                    category: 'Packages',
+                    type: 'Europe',
+                },
+                {
+                    id: 'D007',
+                    name: 'Dubai Luxury Resort — 5 Nights w/ Transfers',
+                    price: 1899,
+                    originalPrice: 2499,
+                    rating: 4.7,
+                    reviews: 3789,
+                    emoji: '🏙️',
+                    category: 'Hotels',
+                    type: 'Middle East',
+                },
+                {
+                    id: 'D008',
+                    name: 'Hawaii Island-Hopping — 7 Days Multi-Island',
+                    price: 1749,
+                    originalPrice: 2399,
+                    rating: 4.9,
+                    reviews: 5634,
+                    emoji: '🌺',
+                    category: 'Packages',
+                    type: 'USA',
+                },
+            ];
+
+            // ─── RENDER DESTINATIONS ───
+            const grid = document.getElementById('destination-grid');
+            destinations.forEach((d) => {
+                const stars = '★'.repeat(Math.floor(d.rating)) + (d.rating % 1 >= 0.5 ? '½' : '');
+                const savings = Math.round(((d.originalPrice - d.price) / d.originalPrice) * 100);
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-destination-id', d.id);
+                card.innerHTML = `
+                <div class="product-image">${d.emoji}</div>
+                <div class="product-badge">${d.category}</div>
+                <div class="product-title" data-destination-name="${d.name}">${d.name}</div>
+                <div class="product-rating">
+                    <span class="stars">${stars}</span>
+                    <span class="rating-count">${d.reviews.toLocaleString()} reviews</span>
+                </div>
+                <div class="product-price" data-price="${d.price}">
+                    <span class="currency">$</span>${d.price.toLocaleString()}<span class="per-person"> /person</span>
+                </div>
+                <div class="product-original-price">Was: $${d.originalPrice.toLocaleString()} — Save ${savings}%</div>
+                <div class="product-delivery">🕐 Free cancellation up to <strong>48 hrs before</strong></div>
+                <button class="btn-add-to-cart" data-destination-id="${d.id}" data-destination-name="${d.name}" data-price="${d.price}" data-category="${d.category}">Add to Trip</button>
+                <button class="btn-buy-now" data-destination-id="${d.id}" data-destination-name="${d.name}" data-price="${d.price}" data-category="${d.category}">Book Now</button>
+            `;
+                grid.appendChild(card);
+            });
+
+            // ─── TRIPS / BOOKING LOGIC ───
+            let tripsCount = 2;
+            document.getElementById('trips-count').textContent = tripsCount;
+
+            document.querySelectorAll('.btn-add-to-cart').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    tripsCount++;
+                    document.getElementById('trips-count').textContent = tripsCount;
+                    const name = e.target.getAttribute('data-destination-name');
+                    showNotification(`✅ Added "${name}" to your trip`);
+                });
+            });
+
+            document.querySelectorAll('.btn-buy-now').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const name = e.target.getAttribute('data-destination-name');
+                    const price = e.target.getAttribute('data-price');
+                    showNotification(`🔒 Processing booking: "${name}" — $${parseInt(price).toLocaleString()}/person`);
+                });
+            });
+
+            // ─── SEARCH ───
+            document.getElementById('search-btn').addEventListener('click', () => {
+                const query = document.getElementById('search-input').value;
+                if (query) {
+                    showNotification(`🔍 Searching destinations: "${query}"`);
+                }
+            });
+
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('search-btn').click();
+                }
+            });
+
+            // ─── CHECKOUT / BOOKING ───
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                showNotification('💳 Proceeding to payment...');
+            });
+
+            document.getElementById('purchase-btn').addEventListener('click', () => {
+                showNotification('✅ Booking confirmed! Check your email for trip details.');
+            });
+
+            // ─── SUBSCRIBE ───
+            document.getElementById('subscribe-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('subscribe-email').value;
+                showNotification(`📬 Subscribed to travel alerts: ${email}`);
+                document.getElementById('subscribe-email').value = '';
+            });
+
+            // ─── SIGN UP ───
+            document.getElementById('signup-btn').addEventListener('click', () => {
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                if (name && email) {
+                    showNotification(`✍️ TravelHub account created for: ${name}`);
+                } else {
+                    showNotification('⚠️ Please fill in all fields');
+                }
+            });
+
+            document.getElementById('signin-btn').addEventListener('click', () => {
+                showNotification('🔑 Redirecting to sign in...');
+            });
+
+            // ─── CONTACT / SUPPORT ───
+            document.getElementById('contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('contact-name').value;
+                showNotification(`📋 Support request submitted from: ${name}`);
+            });
+
+            // ─── BOOKING REMOVE ───
+            document.querySelectorAll('.booking-item-remove').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const item = e.target.closest('.booking-item');
+                    const title = item.querySelector('.booking-item-title').textContent;
+                    item.remove();
+                    tripsCount = Math.max(0, tripsCount - 1);
+                    document.getElementById('trips-count').textContent = tripsCount;
+                    showNotification(`🗑️ Removed "${title}" from trip`);
+                });
+            });
+
+            // ─── DEAL ITEMS ───
+            document.querySelectorAll('.deal-item').forEach((item) => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('.deal-title').textContent;
+                    showNotification(`👁️ Viewing deal: ${title}`);
+                });
+            });
+
+            // ─── DESTINATION TITLE CLICK (ViewContent) ───
+            document.querySelectorAll('.product-title').forEach((title) => {
+                title.addEventListener('click', () => {
+                    const name = title.getAttribute('data-destination-name');
+                    showNotification(`👁️ Viewing: "${name}"`);
+                });
+            });
+
+            // ─── HERO CTA ───
+            document.getElementById('explore-deals-btn').addEventListener('click', () => {
+                showNotification('🌍 Browsing all travel deals...');
+            });
+
+            // ─── NOTIFICATION HELPER ───
+            function showNotification(msg) {
+                const el = document.getElementById('notification');
+                el.textContent = msg;
+                el.classList.add('show');
+                setTimeout(() => el.classList.remove('show'), 3000);
+            }
+        </script>
+
+
+        <!-- Standard Events demo diagnostics -->
+        <script>
+            (function () {
+                var log = document.getElementById('standard-events-log');
+                var lab = document.getElementById('standard-events-lab');
+
+                function addStandardEventsLog(message) {
+                    var time = new Date().toLocaleTimeString();
+                    log.textContent += '[' + time + '] ' + message + '\n';
+                    log.scrollTop = log.scrollHeight;
+                }
+
+                window.addEventListener('load', function () {
+                    addStandardEventsLog('Page load completed');
+                });
+
+                lab.addEventListener('click', function (event) {
+                    var link = event.target.closest('a[href]');
+                    if (link) {
+                        addStandardEventsLog('Link click observed: ' + link.id);
+                    }
+                });
+
+                lab.querySelectorAll('form').forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        addStandardEventsLog('Form submission observed: ' + form.id);
+                    });
+                });
+
+                document.getElementById('standard-events-control-button').addEventListener('click', function () {
+                    addStandardEventsLog('Negative control observed. No link event expected.');
+                });
+
+                document.getElementById('standard-events-clear-log').addEventListener('click', function () {
+                    log.textContent = '';
+                    addStandardEventsLog('Interaction log cleared');
+                });
+            })();
+        </script>
+
+        <!--
+        ## Sources
+
+        - [TravelHub test website by Nita Radhakrishnan](https://nitaradhakrishnan.github.io/testWebsites/travelhub.html) — accessed 2026-09-11
+        -->
+    </body>
 </html>
